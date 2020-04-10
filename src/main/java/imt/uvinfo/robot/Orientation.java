@@ -6,6 +6,6 @@ enum Orientation {
         return values()[(ordinal() + 1) % Orientation.values().length];
     }
     public Orientation previous() {
-        return values()[(ordinal() - 1) % Orientation.values().length];
+        return values()[(ordinal() + 3) % Orientation.values().length];
     }
 }
