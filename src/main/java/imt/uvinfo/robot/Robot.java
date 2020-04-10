@@ -19,5 +19,22 @@ public class Robot {
 	public void turnLeft() {
 		this.ori=this.ori.previous();
 	}
+	public void stepForward() {
+		switch (this.ori) {
+			case NORTH:
+				this.pos=new Position(this.pos.x,this.pos.y+1);
+				break;
+			case SOUTH:
+				this.pos=new Position(this.pos.x,this.pos.y-1);
+				break;
+			case WEST:
+				this.pos=new Position(this.pos.x-1,this.pos.y);
+				break;
+			case EAST:
+				this.pos=new Position(this.pos.x+1,this.pos.y);
+				break;
+		}
+		
+	}
 }
 
