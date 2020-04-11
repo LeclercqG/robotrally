@@ -344,16 +344,16 @@ class RobotTests {
 //        fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
-    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
+//    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
     @Test
     @Order(19)
     @Points(1)
     void creatingThingRequiresPosition() {
-//        Position position = new Position(42, 51);
-//        Thing thing = new Thing(position);
-//
-//        assertEquals(position, thing.position());
-        fail("Décommentez le corps du test et supprimez cette ligne.");
+        Position position = new Position(42, 51);
+        Thing thing = new Thing(position);
+
+        assertEquals(position, thing.position());
+//        fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
     @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
