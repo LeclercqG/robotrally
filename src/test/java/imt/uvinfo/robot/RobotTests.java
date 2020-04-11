@@ -276,72 +276,72 @@ class RobotTests {
 //       fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
-    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
+//    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
     @Test
     @Order(16)
     @Points(2)
     void instructionsStartingNorthAndMoveEastAndNorth() {
-//        Robot robot = new Robot(new Position(7, 3), Orientation.NORTH);
-//
-//        robot.simulate("RAALAL");
-//
-//        Position expectedPosition = new Position(9, 4);
-//        Orientation expectedOrientation = Orientation.WEST;
-//
-//        assertEquals(expectedPosition, robot.position());
-//        assertEquals(expectedOrientation, robot.orientation());
-        fail("Décommentez le corps du test et supprimez cette ligne.");
+        Robot robot = new Robot(new Position(7, 3), Orientation.NORTH);
+
+        robot.simulate("RAALAL");
+
+        Position expectedPosition = new Position(9, 4);
+        Orientation expectedOrientation = Orientation.WEST;
+
+        assertEquals(expectedPosition, robot.position());
+        assertEquals(expectedOrientation, robot.orientation());
+//        fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
-    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
+//    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
     @Test
     @Order(17)
     @Points(1)
     void instructionsToMoveWestAndNorth() {
-//        Robot robot = new Robot(new Position(0, 0), Orientation.NORTH);
-//
-//        robot.simulate("LAAARALA");
-//
-//        Position expectedPosition = new Position(-4, 1);
-//        Orientation expectedOrientation = Orientation.WEST;
-//
-//        assertEquals(expectedPosition, robot.position());
-//        assertEquals(expectedOrientation, robot.orientation());
-        fail("Décommentez le corps du test et supprimez cette ligne.");
+        Robot robot = new Robot(new Position(0, 0), Orientation.NORTH);
+
+        robot.simulate("LAAARALA");
+
+        Position expectedPosition = new Position(-4, 1);
+        Orientation expectedOrientation = Orientation.WEST;
+
+        assertEquals(expectedPosition, robot.position());
+        assertEquals(expectedOrientation, robot.orientation());
+//        fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
-    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
+//    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
     @Test
     @Order(18)
     @Points(1)
     void instructionsToMoveWestAndSouth() {
-//        Robot robot = new Robot(new Position(2, -7), Orientation.EAST);
-//
-//        robot.simulate("RRAAAAALA");
-//
-//        Position expectedPosition = new Position(-3, -8);
-//        Orientation expectedOrientation = Orientation.SOUTH;
-//
-//        assertEquals(expectedPosition, robot.position());
-//        assertEquals(expectedOrientation, robot.orientation());
-        fail("Décommentez le corps du test et supprimez cette ligne.");
+        Robot robot = new Robot(new Position(2, -7), Orientation.EAST);
+
+        robot.simulate("RRAAAAALA");
+
+        Position expectedPosition = new Position(-3, -8);
+        Orientation expectedOrientation = Orientation.SOUTH;
+
+        assertEquals(expectedPosition, robot.position());
+        assertEquals(expectedOrientation, robot.orientation());
+//        fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
-    @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
+ //   @Disabled("Supprimez cette annotation une fois les tests précédents validés.")
     @Test
     @Order(18)
     @Points(1)
     void instructionsStartingSouthAndMoveEastAndNorth() {
-//        Robot robot = new Robot(new Position(8, 4), Orientation.SOUTH);
-//
-//        robot.simulate("LAAARRRALLLL");
-//
-//        Position expectedPosition = new Position(11, 5);
-//        Orientation expectedOrientation = Orientation.NORTH;
-//
-//        assertEquals(expectedPosition, robot.position());
-//        assertEquals(expectedOrientation, robot.orientation());
-        fail("Décommentez le corps du test et supprimez cette ligne.");
+        Robot robot = new Robot(new Position(8, 4), Orientation.SOUTH);
+
+        robot.simulate("LAAARRRALLLL");
+
+        Position expectedPosition = new Position(11, 5);
+        Orientation expectedOrientation = Orientation.NORTH;
+
+        assertEquals(expectedPosition, robot.position());
+        assertEquals(expectedOrientation, robot.orientation());
+//        fail("Décommentez le corps du test et supprimez cette ligne.");
     }
 
     @Disabled("Supprimez cette annotation une fois les tests précédents validés.")

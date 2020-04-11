@@ -36,5 +36,19 @@ public class Robot {
 		}
 		
 	}
+	public void simulate(String string) {
+		for(int i=0;i<string.length();i++)
+			switch(string.charAt(i)) {
+			case 'R':
+				turnRight();
+				break;
+			case 'L':
+				turnLeft();
+				break;
+			case 'A':
+				stepForward();
+				break;
+			}
+	}
 }
 
