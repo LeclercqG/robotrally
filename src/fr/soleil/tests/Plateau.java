@@ -31,4 +31,8 @@ public class Plateau {
 		return Optional.empty();
 	}
 
+	public void ajout(Thing thing) {
+		this.listThing.add(thing);
+	}
+
 }

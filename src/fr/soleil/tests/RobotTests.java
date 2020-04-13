@@ -262,15 +262,16 @@ public class RobotTests {
 
     @Test
     void addThingToWorldAndRetrieveIt() {
-//        Position position = new Position(42, 51);
-//        Thing thing = new Thing(position);
-//
-//        World world = new World();
-//        thing.addTo(world);
-//        Optional<Thing> something = world.at(position);
-//
-//        assertEquals(Optional.of(thing), something);
-//        assertSame(thing, something.orElseThrow());
+        Position position = new Position(42, 51);
+        Thing thing = new Thing(position);
+
+        Plateau plateau = new Plateau(50, 60);
+        plateau.ajout(thing);
+        Optional<ArrayList<Thing>> something = plateau.at(position);
+        Thing thing2= something.get().get(0);
+        
+        assertEquals(thing,thing2);
+        //assertSame(thing, something.orElseThrow());
     }
 
     @Test
