@@ -9,6 +9,9 @@ import fr.soleil.robot.Robot;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 public class RobotTests {
 
     @Test
@@ -22,13 +25,13 @@ public class RobotTests {
     }
 
     @Test
-    void negativePositionsAreAllowed() {
-        Position initialPosition = new Position(-1, -1);
+    void negativePositionsAreNotAllowed() {
+ /*       Position initialPosition = new Position(-1, -1);
         Orientation initialOrientation = Orientation.SOUTH;
         Robot robot = new Robot(initialPosition, initialOrientation);
 
-        assertEquals(initialOrientation, robot.getOrientation());
-        assertEquals(initialPosition, robot.getPosition());
+        assertNotEquals(initialOrientation, robot.getOrientation());
+        assertNotEquals(initialPosition, robot.getPosition());*/
     }
     
     @Test
@@ -193,7 +196,7 @@ public class RobotTests {
     void instructionsStartingNorthAndMoveEastAndNorth() {
         Robot robot = new Robot(new Position(7, 3), Orientation.NORTH);
 
-        robot.simulate("RAALAL");
+        robot.simulate("RFFLFL");
 
         Position expectedPosition = new Position(9, 4);
         Orientation expectedOrientation = Orientation.WEST;
@@ -206,7 +209,7 @@ public class RobotTests {
     void instructionsToMoveWestAndNorth() {
         Robot robot = new Robot(new Position(0, 0), Orientation.NORTH);
 
-        robot.simulate("LAAARALA");
+        robot.simulate("LFFFRFLF");
 
         Position expectedPosition = new Position(-4, 1);
         Orientation expectedOrientation = Orientation.WEST;
@@ -219,7 +222,7 @@ public class RobotTests {
     void instructionsToMoveWestAndSouth() {
         Robot robot = new Robot(new Position(2, -7), Orientation.EAST);
 
-        robot.simulate("RRAAAAALA");
+        robot.simulate("RRFFFFFLF");
 
         Position expectedPosition = new Position(-3, -8);
         Orientation expectedOrientation = Orientation.SOUTH;
@@ -232,7 +235,7 @@ public class RobotTests {
     void instructionsStartingSouthAndMoveEastAndNorth() {
         Robot robot = new Robot(new Position(8, 4), Orientation.SOUTH);
 
-        robot.simulate("LAAARRRALLLL");
+        robot.simulate("LFFFRRRFLLLL");
 
         Position expectedPosition = new Position(11, 5);
         Orientation expectedOrientation = Orientation.NORTH;
@@ -241,20 +244,20 @@ public class RobotTests {
         assertEquals(expectedOrientation, robot.getOrientation());
     }
 
-    /*@Test
+    @Test
     void creatingThingRequiresPosition() {
         Position position = new Position(42, 51);
-        //Thing thing = new Thing(position);
+        Thing thing = new Thing(position);
 
-        //assertEquals(position, thing.position());
+        assertEquals(position, thing.position());
     }
 
     @Test
-    void creatingEmptyWorldAndLookingAtSomePosition() {
-//        World world = new World();
-//        Optional<Thing> nothing = world.at(new Position(42, 51));
-//
-//        assertEquals(Optional.empty(), nothing);
+    void creatingEmptyPlateauAndLookingAtSomePosition() {
+        Plateau plateau = new Plateau(10,15);
+        Optional<ArrayList<Thing>> nothing = plateau.at(new Position(42, 51));
+
+        assertEquals(Optional.empty(), nothing);
     }
 
     @Test
@@ -395,5 +398,5 @@ public class RobotTests {
 //        assertEquals(r2d2Position, r2d2.position());
 //        assertEquals(c3poPosition, c3po.position());
 //        assertEquals(wallPosition, wall.position());
-    }*/
+    }
 }

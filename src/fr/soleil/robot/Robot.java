@@ -51,7 +51,7 @@ public class Robot {
 			case 'L':
 				turnLeft();
 				break;
-			case 'A':
+			case 'F':
 				stepForward();
 				break;
 			}

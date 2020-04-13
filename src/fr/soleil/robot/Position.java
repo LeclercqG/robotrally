@@ -1,11 +1,23 @@
 package fr.soleil.robot;
 
+import java.util.ArrayList;
+
+import fr.soleil.tests.Thing;
+
 public class Position {
     final int x, y;
+    private ArrayList<Thing> contenu;
 
     public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    	if (x>=0)
+    		this.x = x;
+    	else
+    		this.x=0;
+    	if (y>=0)
+    		this.y=y;
+    	else
+    		this.y=0;
+    	this.contenu=new ArrayList<>();
     }
 
     @Override
@@ -32,4 +44,8 @@ public class Position {
         }
         else return x == ((Position) obj).x && y == ((Position) obj).y;
     }
+
+	public ArrayList<Thing> getContenu() {
+		return this.contenu;
+	}
 }
