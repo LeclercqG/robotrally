@@ -1,4 +1,4 @@
-package imt.uvinfo.robot;
+package fr.soleil.robot;
 
 public class Robot {
 	private Position pos;
@@ -9,11 +9,11 @@ public class Robot {
 		this.ori=initialOrientation;
 	}
 	
-	public Object orientation() {
+	public Orientation getOrientation() {
 		return this.ori;
 	}
 	
-	public Object position() {
+	public Position getPosition() {
 		return this.pos;
 	}
 	

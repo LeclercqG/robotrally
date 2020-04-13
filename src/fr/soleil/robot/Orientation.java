@@ -1,6 +1,6 @@
-package imt.uvinfo.robot;
+package fr.soleil.robot;
 
-enum Orientation {
+public enum Orientation {
     NORTH, EAST, SOUTH, WEST;
     public Orientation next() {
         return values()[(ordinal() + 1) % Orientation.values().length];
