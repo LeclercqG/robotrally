@@ -82,7 +82,7 @@ public class Robot extends Thing{
 				case EAST:
 					temppos=new Position(this.pos.x+1,this.pos.y);
 					return Optional.of(temppos.getContenu());			
-	}
+				}
 				return Optional.empty();
 	}
 }

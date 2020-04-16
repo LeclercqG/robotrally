@@ -292,19 +292,23 @@ public class RobotTests {
 
     @Test
     void robotSensesThingJustInFrontOfItself() {
-        /*Robot r2d2 = new Robot(new Position(20, 20), Orientation.NORTH);
+        Robot r2d2 = new Robot(new Position(20, 20), Orientation.NORTH);
         Robot c3po = new Robot(new Position(2, 0), Orientation.WEST);
         Thing something = new Thing(new Position(20, 19));
         Plateau plateau = new Plateau(50,60);
+        ArrayList<Thing> list2019 = new ArrayList<>();
+        list2019.add(something);
         plateau.ajout(r2d2);
         plateau.ajout(c3po);
         plateau.ajout(something);
 
-        Optional<ArrayList<Thing>> sensedByR2D2 = r2d2.senseForward();
-        Optional<ArrayList<Thing>> sensedByC3PO = c3po.senseForward();
+        
+       Optional<ArrayList<Thing>> sensedByR2D2 = r2d2.senseForward();
+       Thing temp = sensedByR2D2.get().get(0);
+       Optional<ArrayList<Thing>> sensedByC3PO = c3po.senseForward();
 
-        assertEquals(Optional.of(something), sensedByR2D2);
-        assertEquals(Optional.empty(), sensedByC3PO);*/
+        assertSame(something, temp);
+        //assertEquals(Optional.empty(), sensedByC3PO);
     }
 
     @Test
