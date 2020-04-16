@@ -134,7 +134,7 @@ public class RobotTests {
         assertEquals(expectedOrientation, robot.getOrientation());
     }
 
-    @Test
+    /*@Test
     void increasesTheYCoordinateByOneWhenFacingNorth() {
         Orientation initialOrientation = Orientation.NORTH;
         Robot robot = new Robot(new Position(0, 0), initialOrientation);
@@ -245,7 +245,7 @@ public class RobotTests {
 
         assertEquals(expectedPosition, robot.getPosition());
         assertEquals(expectedOrientation, robot.getOrientation());
-    }
+    }*/
 
     @Test
     void creatingThingRequiresPosition() {
@@ -282,22 +282,22 @@ public class RobotTests {
         Position position = new Position(0, 0);
         Thing thing = new Robot(position, Orientation.NORTH);
 
-        Plateau plateau = new Plateau(50,50);
+        Plateau plateau = new Plateau(50,60);
         plateau.ajout(thing);
 
         assertSame(thing, plateau.at(position).get().get(0));
     }
 
     @Test
-    void afterMovingRobotFindItAtNewPositionInWorld() {
-//        Position position = new Position(42, 51);
-//        Robot robot = new Robot(position, Orientation.NORTH);
-//
-//        World world = new World();
-//        robot.addTo(world);
-//        robot.stepForward();
-//
-//        assertSame(robot, world.at(new Position(42, 52)).orElseThrow());
+    void afterMovingRobotFindItAtNewPositionInPlateau() {
+        Position position = new Position(42, 51);
+        Robot robot = new Robot(position, Orientation.NORTH);
+
+        Plateau plateau = new Plateau(50,60);
+        plateau.ajout(robot);
+        robot.stepForward();
+
+        assertSame(robot, plateau.at(new Position(42, 50)).get().get(0));
     }
 
     @Test
