@@ -2,7 +2,7 @@ package fr.soleil.robot;
 
 import java.util.ArrayList;
 
-import fr.soleil.tests.Thing;
+import fr.soleil.robot.Thing;
 
 public class Position {
     final int x, y;

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.*;
 import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Position;
 import fr.soleil.robot.Robot;
+import fr.soleil.robot.Thing;
+import fr.soleil.robot.Plateau;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
