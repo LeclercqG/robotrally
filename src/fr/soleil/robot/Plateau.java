@@ -34,5 +34,14 @@ public class Plateau {
 	public void ajout(Thing thing) {
 		this.listThing.add(thing);
 	}
+	
+	public Position getPosition(int x, int y) {
+		return this.plateau[x][y];
+	}
+	
+	public Position[][] getAllPositions(){
+		
+		return plateau;
+	}
 
 }

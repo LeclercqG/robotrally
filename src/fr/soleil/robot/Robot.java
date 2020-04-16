@@ -6,8 +6,8 @@ import java.util.Optional;
 public class Robot extends Thing{
 	private Orientation ori;
 	
-	public Robot(Position initialPosition, Orientation initialOrientation) {
-		super(initialPosition);
+	public Robot(Plateau plateau, Position initialPosition, Orientation initialOrientation) {
+		super(plateau, initialPosition);
 		this.ori=initialOrientation;
 	}
 	
@@ -31,22 +31,22 @@ public class Robot extends Thing{
 		switch (this.ori) {
 			case NORTH:
 				this.pos.getContenu().remove(this);
-				this.pos=new Position(this.pos.x,this.pos.y-1);
+				this.pos=plateau.getPosition(this.pos.x, this.pos.y-1);
 				this.pos.getContenu().add(this);
 				break;
 			case SOUTH:
 				this.pos.getContenu().remove(this);
-				this.pos=new Position(this.pos.x,this.pos.y+1);
+				this.pos=plateau.getPosition(this.pos.x, this.pos.y+1);
 				this.pos.getContenu().add(this);
 				break;
 			case WEST:
 				this.pos.getContenu().remove(this);
-				this.pos=new Position(this.pos.x-1,this.pos.y);
+				this.pos=plateau.getPosition(this.pos.x-1, this.pos.y);
 				this.pos.getContenu().add(this);
 				break;
 			case EAST:
 				this.pos.getContenu().remove(this);
-				this.pos=new Position(this.pos.x+1,this.pos.y);
+				this.pos=plateau.getPosition(this.pos.x+1, this.pos.y);
 				this.pos.getContenu().add(this);
 				break;
 		}
@@ -68,22 +68,16 @@ public class Robot extends Thing{
 	}
 
 	public Optional<ArrayList<Thing>> senseForward() {
-		Position temppos;
 				switch (this.ori) {
 				case NORTH:
-					temppos=new Position(this.pos.x,this.pos.y-1);
-					return Optional.of(temppos.getContenu());
+					return plateau.at(new Position(this.pos.x,this.pos.y-1));
 				case SOUTH:
-					temppos=new Position(this.pos.x,this.pos.y+1);
-					return Optional.of(temppos.getContenu());
+					return plateau.at(new Position(this.pos.x,this.pos.y+1));
 				case WEST:
-					temppos=new Position(this.pos.x-1,this.pos.y);
-					return Optional.of(temppos.getContenu());
+					return plateau.at(new Position(this.pos.x-1,this.pos.y));
 				case EAST:
-					temppos=new Position(this.pos.x+1,this.pos.y);
-					return Optional.of(temppos.getContenu());			
+					return plateau.at(new Position(this.pos.x+1,this.pos.y));	
 				}
 				return Optional.empty();
 	}
 }
-
