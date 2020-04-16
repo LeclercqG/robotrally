@@ -1,5 +1,8 @@
 package fr.soleil.robot;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 public class Robot extends Thing{
 	private Orientation ori;
 	
@@ -63,6 +66,24 @@ public class Robot extends Thing{
 				break;
 			}
 	}
-	
+
+	public Optional<ArrayList<Thing>> senseForward() {
+		Position temppos;
+				switch (this.ori) {
+				case NORTH:
+					temppos=new Position(this.pos.x,this.pos.y-1);
+					return Optional.of(temppos.getContenu());
+				case SOUTH:
+					temppos=new Position(this.pos.x,this.pos.y+1);
+					return Optional.of(temppos.getContenu());
+				case WEST:
+					temppos=new Position(this.pos.x-1,this.pos.y);
+					return Optional.of(temppos.getContenu());
+				case EAST:
+					temppos=new Position(this.pos.x+1,this.pos.y);
+					return Optional.of(temppos.getContenu());			
+	}
+				return Optional.empty();
+	}
 }
 
