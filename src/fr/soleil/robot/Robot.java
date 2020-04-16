@@ -1,11 +1,10 @@
 package fr.soleil.robot;
 
-public class Robot {
-	private Position pos;
+public class Robot extends Thing{
 	private Orientation ori;
 	
 	public Robot(Position initialPosition, Orientation initialOrientation) {
-		this.pos=initialPosition;
+		super(initialPosition);
 		this.ori=initialOrientation;
 	}
 	

@@ -9,6 +9,7 @@ import fr.soleil.robot.Thing;
 import fr.soleil.robot.Plateau;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -278,13 +279,13 @@ public class RobotTests {
 
     @Test
     void robotsAreAKindOfThing() {
-//        Position position = new Position(0, 0);
-//        Thing thing = new Robot(position, Orientation.NORTH);
-//
-//        World world = new World();
-//        thing.addTo(world);
-//
-//        assertSame(thing, world.at(position).orElseThrow());
+        Position position = new Position(0, 0);
+        Thing thing = new Robot(position, Orientation.NORTH);
+
+        Plateau plateau = new Plateau(50,50);
+        plateau.ajout(thing);
+
+        assertSame(thing, plateau.at(position).get().get(0));
     }
 
     @Test
