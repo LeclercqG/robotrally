@@ -28,27 +28,42 @@ public class Robot extends Thing{
 	}
 
 	public void stepForward() {
+		
+		ArrayList<Thing> devant = senseForward();
+		int i = 0;
+		Thing t = null;
+		while(i<devant.size()) {
+			t = devant.get(i);
+			if(t instanceof Obstacle) return;
+			i++;
+		}
+		
 		switch (this.ori) {
 		case NORTH:
+	
 			this.pos.getContenu().remove(this);
 			this.pos=plateau.getPosition(this.pos.x, this.pos.y-1);
 			this.pos.getContenu().add(this);
 			break;
 		case SOUTH:
+			
 			this.pos.getContenu().remove(this);
 			this.pos=plateau.getPosition(this.pos.x, this.pos.y+1);
 			this.pos.getContenu().add(this);
 			break;
 		case WEST:
+			
 			this.pos.getContenu().remove(this);
 			this.pos=plateau.getPosition(this.pos.x-1, this.pos.y);
 			this.pos.getContenu().add(this);
 			break;
 		case EAST:
+			
 			this.pos.getContenu().remove(this);
 			this.pos=plateau.getPosition(this.pos.x+1, this.pos.y);
 			this.pos.getContenu().add(this);
 			break;
+		
 		}
 	}
 
@@ -80,4 +95,21 @@ public class Robot extends Thing{
 		}
 		return new ArrayList<Thing>();
 	}
+	
+	/*public Robot getRobotInArray(ArrayList<Thing> list) {
+		for(Thing t : list) {
+			if(t instanceof Robot) {
+				return (Robot) t;
+			}
+		}
+		return null;
+	}
+	
+	public Robot hsudq(Robot r) {
+		if(stepForward()) {
+			return getRobotInArray(senseForward());
+		}
+	}*/
+	
+	
 }

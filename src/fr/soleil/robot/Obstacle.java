@@ -1,8 +1,4 @@
-package fr.soleil.tests;
-
-import fr.soleil.robot.Plateau;
-import fr.soleil.robot.Position;
-import fr.soleil.robot.Thing;
+package fr.soleil.robot;
 
 public class Obstacle extends Thing {
 

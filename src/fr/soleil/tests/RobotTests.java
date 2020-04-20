@@ -2,6 +2,7 @@ package fr.soleil.tests;
 
 import org.junit.jupiter.api.*;
 
+import fr.soleil.robot.Obstacle;
 import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Position;
 import fr.soleil.robot.Robot;
@@ -15,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 
 public class RobotTests {
+	private final int plateauX = 60;
+	private final int plateauY = 60;
 	private Plateau p;
 	@BeforeEach
 	void init() {
-		p = new Plateau(60, 60);
+		p = new Plateau(plateauX, plateauY);
 	}
 
     @Test
@@ -319,55 +322,47 @@ public class RobotTests {
 
     @Test
     void obstaclePreventsRobotFromMovingToThatPosition() {
-        Position wallPosition = p.getPosition(2, 0);
+        Position wallPosition = p.getPosition(10, 10);
         Thing wall = new Obstacle(p, wallPosition);
-        Robot r2d2 = new Robot(p,p.getPosition(0, 0), Orientation.EAST);
+        Robot r2d2 = new Robot(p,p.getPosition(8, 10), Orientation.EAST);
 
         r2d2.stepForward();
-        assertEquals(p.getPosition(1, 0), r2d2.position());
+        assertEquals(p.getPosition(9, 10), r2d2.position());
 
         r2d2.stepForward();
-        assertEquals(p.getPosition(1, 0), r2d2.position());
+        assertEquals(p.getPosition(9, 10), r2d2.position());
 
         r2d2.turnLeft();
         r2d2.stepForward();
-        assertEquals(p.getPosition(1, 1), r2d2.position());
+        assertEquals(p.getPosition(9, 9), r2d2.position());
 
         assertEquals(wallPosition, wall.position());
     }
     
-    @Test
+    /*@Test
     void movingIntoAnotherRobotPushesIt() {
-//        Robot r2d2 = new Robot(new Position(0, 0), Orientation.EAST);
-//        Robot c3po = new Robot(new Position(1, 0), Orientation.NORTH);
-//        World world = new World();
-//        r2d2.addTo(world);
-//        c3po.addTo(world);
-//
-//        r2d2.stepForward();
-//
-//        assertEquals(new Position(1, 0), r2d2.position());
-//        assertEquals(new Position(2, 0), c3po.position());
+        Robot r2d2 = new Robot(p,p.getPosition(0, 0), Orientation.EAST);
+        Robot c3po = new Robot(p,p.getPosition(1, 0), Orientation.NORTH);
+
+        r2d2.stepForward();
+
+        assertEquals(new Position(1, 0), r2d2.position());
+        assertEquals(new Position(2, 0), c3po.position());
     }
 
     @Test
     void pushingIsTransitive() {
-//        Robot r2d2 = new Robot(new Position(0, 0), Orientation.EAST);
-//        Robot c3po = new Robot(new Position(1, 0), Orientation.NORTH);
-//        Robot bb8 = new Robot(new Position(2, 0), Orientation.WEST);
-//
-//        World world = new World();
-//        r2d2.addTo(world);
-//        c3po.addTo(world);
-//        bb8.addTo(world);
-//
-//        r2d2.stepForward();
-//
-//        assertEquals(new Position(1, 0), r2d2.position());
-//        assertEquals(new Position(2, 0), c3po.position());
-//        assertEquals(new Position(3, 0), bb8.position());
-    }
+    	Robot r2d2 = new Robot(p, p.getPosition(0, 0), Orientation.EAST);
+        Robot c3po = new Robot(p, p.getPosition(1, 0), Orientation.NORTH);
+        Robot bb8 = new Robot(p, p.getPosition(2, 0), Orientation.WEST);
 
+        r2d2.stepForward();
+
+        assertEquals(new Position(1, 0), r2d2.position());
+        assertEquals(new Position(2, 0), c3po.position());
+        assertEquals(new Position(3, 0), bb8.position());
+    }
+*/
     @Test
     void pushingAgainstRobotAgainstWall() {
 //        Position r2d2Position = new Position(0, 0);
