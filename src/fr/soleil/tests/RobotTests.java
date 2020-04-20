@@ -1,6 +1,5 @@
 package fr.soleil.tests;
 
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 import fr.soleil.robot.Orientation;
@@ -14,7 +13,6 @@ import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class RobotTests {
 	private Plateau p;
@@ -26,7 +24,7 @@ public class RobotTests {
     @Test
     void robotsAreCreatedWithAPositionAndOrientation() {
         Orientation initialOrientation = Orientation.NORTH;
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, initialOrientation);
 
         assertEquals(initialOrientation, robot.getOrientation());
@@ -35,7 +33,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromNorthToEast() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.NORTH);
 
         robot.turnRight();
@@ -48,7 +46,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromEastToSouth() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.EAST);
 
         robot.turnRight();
@@ -60,7 +58,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromSouthToWest() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.SOUTH);
 
         robot.turnRight();
@@ -72,7 +70,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromWestToNorth() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.WEST);
 
         robot.turnRight();
@@ -84,7 +82,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromNorthToWest() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.NORTH);
 
         robot.turnLeft();
@@ -96,7 +94,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromWestToSouth() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.WEST);
 
         robot.turnLeft();
@@ -108,7 +106,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromSouthToEast() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.SOUTH);
 
         robot.turnLeft();
@@ -120,7 +118,7 @@ public class RobotTests {
 
     @Test
     void changesTheDirectionFromEastToNorth() {
-        Position initialPosition = new Position(0, 0);
+        Position initialPosition = p.getPosition(0, 0);
         Robot robot = new Robot(p,initialPosition, Orientation.EAST);
 
         robot.turnLeft();
@@ -133,11 +131,11 @@ public class RobotTests {
     @Test
     void decreaseTheYCoordinateByOneWhenFacingNorth() {
         Orientation initialOrientation = Orientation.NORTH;
-        Robot robot = new Robot(p,new Position(20, 20), initialOrientation);
+        Robot robot = new Robot(p,p.getPosition(20, 20), initialOrientation);
 
         robot.stepForward();
 
-        Position expectedPosition = new Position(20, 19);
+        Position expectedPosition = p.getPosition(20, 19);
         assertEquals(expectedPosition, robot.getPosition());
         assertEquals(initialOrientation, robot.getOrientation());
     }
@@ -145,11 +143,11 @@ public class RobotTests {
     @Test
     void increaseTheYCoordinateByOneWhenFacingSouth() {
         Orientation initialOrientation = Orientation.SOUTH;
-        Robot robot = new Robot(p,new Position(20, 20), initialOrientation);
+        Robot robot = new Robot(p,p.getPosition(20, 20), initialOrientation);
 
         robot.stepForward();
 
-        Position expectedPosition = new Position(20, 21);
+        Position expectedPosition = p.getPosition(20, 21);
         assertEquals(expectedPosition, robot.getPosition());
         assertEquals(initialOrientation, robot.getOrientation());
     }
@@ -157,11 +155,11 @@ public class RobotTests {
     @Test
     void increasesTheXCoordinateByOneWhenFacingEast() {
         Orientation initialOrientation = Orientation.EAST;
-        Robot robot = new Robot(p,new Position(0, 0), initialOrientation);
+        Robot robot = new Robot(p,p.getPosition(0, 0), initialOrientation);
 
         robot.stepForward();
 
-        Position expectedPosition = new Position(1, 0);
+        Position expectedPosition = p.getPosition(1, 0);
         assertEquals(expectedPosition, robot.getPosition());
         assertEquals(initialOrientation, robot.getOrientation());
     }
@@ -169,18 +167,18 @@ public class RobotTests {
     @Test
     void decreasesTheXCoordinateByOneWhenFacingWest() {
         Orientation initialOrientation = Orientation.WEST;
-        Robot robot = new Robot(p,new Position(20, 20), initialOrientation);
+        Robot robot = new Robot(p,p.getPosition(20, 20), initialOrientation);
 
         robot.stepForward();
 
-        Position expectedPosition = new Position(19, 20);
+        Position expectedPosition = p.getPosition(19, 20);
         assertEquals(expectedPosition, robot.getPosition());
         assertEquals(initialOrientation, robot.getOrientation());
     }
 
     @Test
     void movingOneRobotHasNoEffectOnAnotherRobot() {
-        Position initialPosition = new Position(42, 51);
+        Position initialPosition = p.getPosition(42, 51);
         Robot r2d2 = new Robot(p,initialPosition, Orientation.NORTH);
         Robot c3po = new Robot(p,initialPosition, Orientation.NORTH);
 
@@ -188,16 +186,16 @@ public class RobotTests {
 
         assertNotEquals(initialPosition, c3po.getPosition());
         assertEquals(initialPosition, r2d2.getPosition());
-        assertEquals(new Position(42, 51), initialPosition);
+        assertEquals(p.getPosition(42, 51), initialPosition);
     }
 
     @Test
     void instructionsStartingNorthAndMoveEastAndNorth() {
-        Robot robot = new Robot(p,new Position(20, 20), Orientation.NORTH);
+        Robot robot = new Robot(p,p.getPosition(20, 20), Orientation.NORTH);
 
         robot.simulate("RFFLFL");
 
-        Position expectedPosition = new Position(22, 19);
+        Position expectedPosition = p.getPosition(22, 19);
         Orientation expectedOrientation = Orientation.WEST;
 
         assertEquals(expectedPosition, robot.getPosition());
@@ -206,11 +204,11 @@ public class RobotTests {
 
     @Test
     void instructionsToMoveWestAndNorth() {
-        Robot robot = new Robot(p,new Position(20, 20), Orientation.NORTH);
+        Robot robot = new Robot(p,p.getPosition(20, 20), Orientation.NORTH);
 
         robot.simulate("LFFFRFLF");
 
-        Position expectedPosition = new Position(16, 19);
+        Position expectedPosition = p.getPosition(16, 19);
         Orientation expectedOrientation = Orientation.WEST;
 
         assertEquals(expectedPosition, robot.getPosition());
@@ -219,11 +217,11 @@ public class RobotTests {
 
     @Test
     void instructionsToMoveWestAndSouth() {
-        Robot robot = new Robot(p,new Position(20, 20), Orientation.EAST);
+        Robot robot = new Robot(p,p.getPosition(20, 20), Orientation.EAST);
 
         robot.simulate("RRFFFFFLF");
 
-        Position expectedPosition = new Position(15, 21);
+        Position expectedPosition = p.getPosition(15, 21);
         Orientation expectedOrientation = Orientation.SOUTH;
 
         assertEquals(expectedPosition, robot.getPosition());
@@ -232,11 +230,11 @@ public class RobotTests {
 
     @Test
     void instructionsStartingSouthAndMoveEastAndNorth() {
-        Robot robot = new Robot(p,new Position(20, 20), Orientation.SOUTH);
+        Robot robot = new Robot(p,p.getPosition(20, 20), Orientation.SOUTH);
 
         robot.simulate("LFFFRRRFLLLL");
 
-        Position expectedPosition = new Position(23, 19);
+        Position expectedPosition = p.getPosition(23, 19);
         Orientation expectedOrientation = Orientation.NORTH;
 
         assertEquals(expectedPosition, robot.getPosition());
@@ -245,7 +243,7 @@ public class RobotTests {
 
     @Test
     void creatingThingRequiresPosition() {
-        Position position = new Position(42, 51);
+        Position position = p.getPosition(42, 51);
         Thing thing = new Thing(p,position);
 
         assertEquals(position, thing.position());
@@ -254,20 +252,18 @@ public class RobotTests {
     @Test
     void creatingEmptyPlateauAndLookingAtSomePosition() {
 
-        Optional<ArrayList<Thing>> nothing = p.at(new Position(42, 51));
+        ArrayList<Thing> nothing = p.at(p.getPosition(42, 51));
 
-        assertEquals(Optional.empty(), nothing);
+        assertEquals(new ArrayList<Thing>(), nothing);
     }
 
     @Test
     void addThingToWorldAndRetrieveIt() {
-        Position position = new Position(42, 51);
+        Position position = p.getPosition(42, 51);
         Thing thing = new Thing(p,position);
 
-
-        p.ajout(thing);
-        Optional<ArrayList<Thing>> something = p.at(position);
-        Thing thing2= something.get().get(0);
+        ArrayList<Thing> something = p.at(position);
+        Thing thing2= something.get(0);
         
         assertEquals(thing,thing2);
         //assertSame(thing, something.orElseThrow());
@@ -275,23 +271,20 @@ public class RobotTests {
 
     @Test
     void robotsAreAKindOfThing() {
-        Position position = new Position(0, 0);
+        Position position = p.getPosition(0, 0);
         Thing thing = new Robot(p,position, Orientation.NORTH);
 
-        p.ajout(thing);
-
-        assertSame(thing, p.at(position).get().get(0));
+        assertSame(thing, p.at(position).get(0));
     }
 
     @Test
     void afterMovingRobotFindItAtNewPositionInPlateau() {
-        Position position = new Position(42, 51);
+        Position position = p.getPosition(42, 51);
         Robot robot = new Robot(p,position, Orientation.NORTH);
 
-        p.ajout(robot);
         robot.stepForward();
 
-        assertSame(robot, p.at(new Position(42, 50)).get().get(0));
+        assertSame(robot, p.at(p.getPosition(42, 50)).get(0));
     }
 
     @Test
@@ -303,51 +296,44 @@ public class RobotTests {
         
         ArrayList<Thing> list2019 = new ArrayList<>();
         list2019.add(something);
-        p.ajout(r2d2);
-        p.ajout(c3po);
-        p.ajout(something);
+
 
         
-       Optional<ArrayList<Thing>> sensedByR2D2 = r2d2.senseForward();
-       Thing temp = sensedByR2D2.get().get(0);
-       Optional<ArrayList<Thing>> sensedByC3PO = c3po.senseForward();
+       ArrayList<Thing> sensedByR2D2 = r2d2.senseForward();
+       Thing temp = sensedByR2D2.get(0);
+       ArrayList<Thing> sensedByC3PO = c3po.senseForward();
 
         assertSame(something, temp);
-        assertEquals(Optional.empty(), sensedByC3PO);
+        assertEquals(new ArrayList<Thing>(), sensedByC3PO);
     }
 
     @Test
     void obstaclesAreThings() {
-//        Position position = new Position(0, 0);
-//        Thing thing = new Obstacle(position);
-//
-//        World world = new World();
-//        thing.addTo(world);
-//
-//        assertSame(thing, world.at(position).orElseThrow());
+    	Thing thing = new Obstacle(p, p.getPosition(10, 10));
+    	ArrayList<Thing> list = new ArrayList<Thing>();
+    	list.add(thing);
+        
+
+        assertEquals(list, p.at(p.getPosition(10, 10)));
     }
 
     @Test
     void obstaclePreventsRobotFromMovingToThatPosition() {
-//        Position wallPosition = new Position(2, 0);
-//        Thing wall = new Obstacle(wallPosition);
-//        Robot r2d2 = new Robot(new Position(0, 0), Orientation.EAST);
-//
-//        World world = new World();
-//        wall.addTo(world);
-//        r2d2.addTo(world);
-//
-//        r2d2.stepForward();
-//        assertEquals(new Position(1, 0), r2d2.position());
-//
-//        r2d2.stepForward();
-//        assertEquals(new Position(1, 0), r2d2.position());
-//
-//        r2d2.turnLeft();
-//        r2d2.stepForward();
-//        assertEquals(new Position(1, 1), r2d2.position());
-//
-//        assertEquals(wallPosition, wall.position());
+        Position wallPosition = p.getPosition(2, 0);
+        Thing wall = new Obstacle(p, wallPosition);
+        Robot r2d2 = new Robot(p,p.getPosition(0, 0), Orientation.EAST);
+
+        r2d2.stepForward();
+        assertEquals(p.getPosition(1, 0), r2d2.position());
+
+        r2d2.stepForward();
+        assertEquals(p.getPosition(1, 0), r2d2.position());
+
+        r2d2.turnLeft();
+        r2d2.stepForward();
+        assertEquals(p.getPosition(1, 1), r2d2.position());
+
+        assertEquals(wallPosition, wall.position());
     }
     
     @Test

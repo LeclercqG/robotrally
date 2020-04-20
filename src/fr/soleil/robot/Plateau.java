@@ -7,11 +7,9 @@ import fr.soleil.robot.Position;
 
 public class Plateau {
 	private Position plateau[][];
-	private ArrayList<Thing> listThing;
 	
 	public Plateau(int width, int length) {
 		this.plateau=new Position[width][length];
-		this.listThing=new ArrayList<>();
 		this.init();
 	}
 	
@@ -23,17 +21,11 @@ public class Plateau {
 		}
 	}
 	
-	public Optional<ArrayList<Thing>> at(Position pos) {
-		for(Thing t:listThing) {
-			if(t.position().equals(pos))
-				return Optional.of(t.position().getContenu());
-		}
-		return Optional.empty();
+	public ArrayList<Thing> at(Position pos) {
+		
+		return pos.getContenu();
 	}
 
-	public void ajout(Thing thing) {
-		this.listThing.add(thing);
-	}
 	
 	public Position getPosition(int x, int y) {
 		return this.plateau[x][y];

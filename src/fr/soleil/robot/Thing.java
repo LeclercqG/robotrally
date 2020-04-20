@@ -14,6 +14,4 @@ public class Thing {
 	public Position position() {
 		return this.pos;
 	}
-
-
 }
