@@ -341,13 +341,13 @@ public class RobotTests {
     
     @Test
     void movingIntoAnotherRobotPushesIt() {
-        Robot r2d2 = new Robot(p,p.getPosition(0, 0), Orientation.EAST);
-        Robot c3po = new Robot(p,p.getPosition(1, 0), Orientation.NORTH);
+        Robot r2d2 = new Robot(p,p.getPosition(10, 10), Orientation.EAST);
+        Robot c3po = new Robot(p,p.getPosition(11, 10), Orientation.NORTH);
 
         r2d2.stepForward();
 
-        assertEquals(new Position(1, 0), r2d2.position());
-        assertEquals(new Position(2, 0), c3po.position());
+        assertEquals(new Position(11, 10), r2d2.position());
+        assertEquals(new Position(12, 10), c3po.position());
     }
 
     @Test
