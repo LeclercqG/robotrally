@@ -7,7 +7,11 @@ import fr.soleil.robot.Position;
 
 public class Plateau {
 	private Position plateau[][];
-	
+	//private List<Object> colonne<List ligne<List<T extends Item<>>>;
+	//private Map<Integer,Object> colonne;
+	//private Map<Integer,Object> ligne;
+	//Map<Integer, Position> plateau;
+
 	public Plateau(int width, int length) {
 		this.plateau=new Position[width][length];
 		this.init();

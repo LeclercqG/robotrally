@@ -26,46 +26,46 @@ public class Robot extends Thing{
 	public void turnLeft() {
 		this.ori=this.ori.previous();
 	}
+	
+	public void moveContenu(int x, int y) {
+		this.pos.getContenu().remove(this);
+		this.pos=plateau.getPosition(x, y);
+		this.pos.getContenu().add(this);
+	}
 
-	public void stepForward() {
+	public boolean stepForward() {
 		
 		ArrayList<Thing> devant = senseForward();
 		int i = 0;
 		Thing t = null;
 		while(i<devant.size()) {
 			t = devant.get(i);
-			if(t instanceof Obstacle) return;
+			if(t instanceof Obstacle) return false;
+			//if(t instanceof Robot) transitiveMove( t.pos.getContenu().get(0));
 			i++;
 		}
 		
 		switch (this.ori) {
 		case NORTH:
-	
-			this.pos.getContenu().remove(this);
-			this.pos=plateau.getPosition(this.pos.x, this.pos.y-1);
-			this.pos.getContenu().add(this);
-			break;
+			moveContenu(this.pos.x, this.pos.y-1);
+			return true;
+			
 		case SOUTH:
+			moveContenu(this.pos.x, this.pos.y+1);
+			return true;
 			
-			this.pos.getContenu().remove(this);
-			this.pos=plateau.getPosition(this.pos.x, this.pos.y+1);
-			this.pos.getContenu().add(this);
-			break;
 		case WEST:
+			moveContenu(this.pos.x-1, this.pos.y);
+			return true;
 			
-			this.pos.getContenu().remove(this);
-			this.pos=plateau.getPosition(this.pos.x-1, this.pos.y);
-			this.pos.getContenu().add(this);
-			break;
 		case EAST:
+			moveContenu(this.pos.x+1, this.pos.y);
+			return true;
 			
-			this.pos.getContenu().remove(this);
-			this.pos=plateau.getPosition(this.pos.x+1, this.pos.y);
-			this.pos.getContenu().add(this);
-			break;
-		
 		}
+		return false;
 	}
+	
 
 	public void simulate(String string) {
 		for(int i=0;i<string.length();i++)
@@ -105,10 +105,11 @@ public class Robot extends Thing{
 		return null;
 	}
 	
-	public Robot hsudq(Robot r) {
+	public Robot transitiveMove(Robot r) {
 		if(stepForward()) {
 			return getRobotInArray(senseForward());
 		}
+		else return r;
 	}*/
 	
 	
