@@ -96,7 +96,9 @@ public class Robot extends Thing{
 		return new ArrayList<Thing>();
 	}
 	
-	/*public Robot getRobotInArray(ArrayList<Thing> list) {
+	
+	
+	public Robot checkRobotInList(ArrayList<Thing> list) {
 		for(Thing t : list) {
 			if(t instanceof Robot) {
 				return (Robot) t;
@@ -105,12 +107,28 @@ public class Robot extends Thing{
 		return null;
 	}
 	
-	public Robot transitiveMove(Robot r) {
-		if(stepForward()) {
-			return getRobotInArray(senseForward());
+	public Obstacle checkObstacleInList(ArrayList<Thing> list) {
+		for(Thing t : list) {
+			if(t instanceof Obstacle) {
+				return (Obstacle) t;
+			}
 		}
-		else return r;
-	}*/
+		return null;
+	}
 	
+	public void transitiveMove(Robot r) {
+		ArrayList<Thing> devant = this.senseForward();
+		
+		if(checkObstacleInList(devant)==null && checkRobotInList(devant) == null) {
+			stepForward();
+		}else {
+			if(checkObstacleInList(devant)!= null) {
+				//Il y a un obstacle on fait des trucs
+			}else if(checkRobotInList(devant) != null) {
+				transitiveMove(checkRobotInList(devant));
+			}	
+			
+		}
+	}
 	
 }

@@ -339,7 +339,7 @@ public class RobotTests {
         assertEquals(wallPosition, wall.position());
     }
     
-    /*@Test
+    @Test
     void movingIntoAnotherRobotPushesIt() {
         Robot r2d2 = new Robot(p,p.getPosition(0, 0), Orientation.EAST);
         Robot c3po = new Robot(p,p.getPosition(1, 0), Orientation.NORTH);
@@ -361,7 +361,7 @@ public class RobotTests {
         assertEquals(new Position(1, 0), r2d2.position());
         assertEquals(new Position(2, 0), c3po.position());
         assertEquals(new Position(3, 0), bb8.position());
-    }*/
+    }
 
     @Test
     void pushingAgainstRobotAgainstWall() {
