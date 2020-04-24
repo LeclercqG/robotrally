@@ -36,16 +36,16 @@ public class Robot extends Thing{
 		switch (o) {
 		case NORTH:
 			moveContenu(this.pos.x, this.pos.y-1);
-
+			break;
 		case SOUTH:
 			moveContenu(this.pos.x, this.pos.y+1);
-
+			break;	
 		case WEST:
 			moveContenu(this.pos.x-1, this.pos.y);
-
+			break;
 		case EAST:
 			moveContenu(this.pos.x+1, this.pos.y);
-
+			break;
 		}
 	}
 	
