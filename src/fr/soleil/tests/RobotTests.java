@@ -302,12 +302,12 @@ public class RobotTests {
 
 
         
-       ArrayList<Thing> sensedByR2D2 = r2d2.senseForward();
+       ArrayList<Thing> sensedByR2D2 = r2d2.senseDirection(r2d2.getOrientation());
        Thing temp = sensedByR2D2.get(0);
-       ArrayList<Thing> sensedByC3PO = c3po.senseForward();
+       ArrayList<Thing> sensedByC3PO = c3po.senseDirection(c3po.getOrientation());
 
-        assertSame(something, temp);
-        assertEquals(new ArrayList<Thing>(), sensedByC3PO);
+       assertSame(something, temp);
+       assertEquals(new ArrayList<Thing>(), sensedByC3PO);
     }
 
     @Test
@@ -363,24 +363,19 @@ public class RobotTests {
         assertEquals(new Position(3, 0), bb8.position());
     }
 
-    @Test
+    /*@Test
     void pushingAgainstRobotAgainstWall() {
-//        Position r2d2Position = new Position(0, 0);
-//        Position c3poPosition = new Position(1, 0);
-//        Position wallPosition = new Position(2, 0);
-//        Robot r2d2 = new Robot(r2d2Position, Orientation.EAST);
-//        Robot c3po = new Robot(c3poPosition, Orientation.NORTH);
-//        Thing wall = new Obstacle(wallPosition);
-//
-//        World world = new World();
-//        r2d2.addTo(world);
-//        c3po.addTo(world);
-//        wall.addTo(world);
-//
-//        r2d2.stepForward();
-//
-//        assertEquals(r2d2Position, r2d2.position());
-//        assertEquals(c3poPosition, c3po.position());
-//        assertEquals(wallPosition, wall.position());
-    }
+        Position r2d2Position = new Position(0, 0);
+        Position c3poPosition = new Position(1, 0);
+        Position wallPosition = new Position(2, 0);
+        Robot r2d2 = new Robot(p,r2d2Position, Orientation.EAST);
+        Robot c3po = new Robot(p,c3poPosition, Orientation.NORTH);
+        Thing wall = new Obstacle(p,wallPosition);
+
+        r2d2.stepForward();
+
+        assertEquals(r2d2Position, r2d2.position());
+        assertEquals(c3poPosition, c3po.position());
+        assertEquals(wallPosition, wall.position());
+    }*/
 }

@@ -52,19 +52,14 @@ public class Robot extends Thing{
 
 	public void stepForward() {
 
-		ArrayList<Thing> devant = senseForward();
-		if(checkObstacleInList(devant) !=null) {
+		ArrayList<Thing> devant = senseDirection(this.ori);
+		if(checkObstacleInList(devant) != null) {
 			return;
-		}else if(checkRobotInList(devant)!= null) {
-			boolean resultShift = shiftRobot(checkRobotInList(devant), this.ori);
-			if(resultShift) {
-				moveDirection(this.ori);
-			}
-		}else {
-			moveDirection(this.ori);
-			
 		}
-		
+		else if(checkRobotInList(devant) != null) {
+				shiftRobot(this, this.ori);
+			}
+		else moveDirection(this.ori);	
 	}
 
 
@@ -82,9 +77,9 @@ public class Robot extends Thing{
 				break;
 			}
 	}
-
-	public ArrayList<Thing> senseForward() {
-		switch (this.ori) {
+	
+	public ArrayList<Thing> senseDirection(Orientation o) {
+		switch (o) {
 		case NORTH:
 			return plateau.at(plateau.getPosition(this.pos.x,this.pos.y-1));
 		case SOUTH:
@@ -96,8 +91,6 @@ public class Robot extends Thing{
 		}
 		return new ArrayList<Thing>();
 	}
-
-
 
 	public Robot checkRobotInList(ArrayList<Thing> list) {
 		for(Thing t : list) {
@@ -116,28 +109,19 @@ public class Robot extends Thing{
 		}
 		return null;
 	}
-	
 
 	public boolean shiftRobot(Robot r, Orientation o) {
-		Robot devant = checkRobotInList(r.senseForward());
-		if(devant != null) {
-			boolean statutDevant = shiftRobot(devant, o);
-			if(statutDevant) { //Devant dit ok on avance
-				r.moveDirection(o);
-				return true;
-			}else { //Devant dit stop on avance pas
-				return false;
-			}
-		}else { //On est au bout de la chaine de robot
-			if(checkObstacleInList(this.senseForward()) != null) { //Il y a un obstacle
-				return false;
-			}else {
+		Robot robotDevant = checkRobotInList(r.senseDirection(o));
+		if(robotDevant != null) {
+			if(shiftRobot(robotDevant, o)) { //Devant dit ok on avance
 				r.moveDirection(o);
 				return true;
 			}
-
+			else return false;//Devant dit stop on avance pas
 		}
+		else //On est au bout de la chaine de robot
+			if(checkObstacleInList(this.senseDirection(o)) != null) return false;//Il y a un obstacle
+		r.moveDirection(o);
+		return true;
 	}
-
-
 }
