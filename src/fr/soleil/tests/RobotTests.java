@@ -2,7 +2,7 @@ package fr.soleil.tests;
 
 import org.junit.jupiter.api.*;
 
-import fr.soleil.robot.Obstacle;
+import fr.soleil.robot.Mur;
 import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Position;
 import fr.soleil.robot.Robot;
@@ -312,7 +312,7 @@ public class RobotTests {
 
     @Test
     void obstaclesAreThings() {
-    	Thing thing = new Obstacle(p, p.getPosition(10, 10),Orientation.NORTH);
+    	Thing thing = new Mur(p, p.getPosition(10, 10),Orientation.NORTH);
     	ArrayList<Thing> list = new ArrayList<Thing>();
     	list.add(thing);
         
@@ -323,11 +323,11 @@ public class RobotTests {
     @Test
     void obstaclePreventsRobotFromMovingToThatPosition() {
         Position wallPosition = p.getPosition(10, 10);
-        Thing wall = new Obstacle(p, wallPosition, Orientation.WEST);
+        Thing wall = new Mur(p, wallPosition, Orientation.WEST);
         
         Position wall2Position = p.getPosition(9, 9);
         
-        Thing wall2 = new Obstacle(p, wallPosition, Orientation.NORTH);
+        Thing wall2 = new Mur(p, wall2Position, Orientation.NORTH);
         
         Robot r2d2 = new Robot(p, p.getPosition(8, 10), Orientation.EAST);
 
@@ -372,19 +372,19 @@ public class RobotTests {
         assertEquals(new Position(3, 0), bb8.position());
     }
 
-    /*@Test
+    @Test
     void pushingAgainstRobotAgainstWall() {
-        Position r2d2Position = p.getPosition(0, 0);
-        Position c3poPosition = p.getPosition(1, 0);
-        Position wallPosition = p.getPosition(2, 0);
+        Position r2d2Position = p.getPosition(10, 10);
+        Position c3poPosition = p.getPosition(11, 10);
+        Position wallPosition = p.getPosition(11, 10);
         Robot r2d2 = new Robot(p,r2d2Position, Orientation.EAST);
         Robot c3po = new Robot(p,c3poPosition, Orientation.NORTH);
-        Thing wall = new Obstacle(p,wallPosition);
+        Thing wall = new Mur(p,wallPosition, Orientation.EAST);
 
         r2d2.stepForward();
 
         assertEquals(r2d2Position, r2d2.position());
         assertEquals(c3poPosition, c3po.position());
         assertEquals(wallPosition, wall.position());
-    }*/
+    }
 }

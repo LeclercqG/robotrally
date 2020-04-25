@@ -49,16 +49,19 @@ public class Robot extends Thing{
 		}
 	}
 	
-	public boolean canMove() { //vérifie si le robot peut bouger
-		Obstacle oDevant=checkObstacleInList(senseDirection(this.ori));
-		Obstacle oIci=checkObstacleInList(this.getPosition().getContenu());
-		if( (oDevant != null && oDevant.ori==this.ori.next().next()) ||  (oIci != null && oIci.ori==this.ori))
+	public boolean canMove(Orientation o) { //verifie si le robot peut bouger
+		
+		Mur oriDevant=checkMurInList(senseDirection(o));
+		Mur oriIci=checkMurInList(getPosition().getContenu());
+		
+		
+		if((oriDevant != null && oriDevant.getOrientation()==o.next().next()) ||  (oriIci != null && oriIci.getOrientation()==o))
 			return false;
 		return true;
 	}
 
 	public void stepForward() {
-		if(!canMove()) {
+		if(!canMove(this.ori)) {
 			return;
 		}
 		else if(checkRobotInList(senseDirection(this.ori)) != null) {
@@ -106,10 +109,10 @@ public class Robot extends Thing{
 		return null;
 	}
 
-	public Obstacle checkObstacleInList(ArrayList<Thing> list) {
+	public Mur checkMurInList(ArrayList<Thing> list) {
 		for(Thing t : list) {
-			if(t instanceof Obstacle) {
-				return (Obstacle) t;
+			if(t instanceof Mur) {
+				return (Mur) t;
 			}
 		}
 		return null;
@@ -125,7 +128,7 @@ public class Robot extends Thing{
 			else return false;//On avance pas
 		}
 		else //On est au bout de la chaine de robot
-			if(checkObstacleInList(r.senseDirection(o)) != null) return false;//Il y a un obstacle
+			if(!r.canMove(o)) return false;//Il y a un obstacle
 		r.moveDirection(o);
 		return true;
 	}
