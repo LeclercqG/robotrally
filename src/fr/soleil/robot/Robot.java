@@ -53,7 +53,10 @@ public class Robot extends Thing{
 	public void stepForward() {
 
 		ArrayList<Thing> devant = senseDirection(this.ori);
-		if(checkObstacleInList(devant) != null) {
+		Obstacle oDevant=checkObstacleInList(devant);
+		ArrayList<Thing> ici = senseDirection(this.ori);
+		Obstacle oIci=checkObstacleInList(devant);
+		if( (oDevant != null && oDevant.ori==this.ori.next().next()) ||  (oIci != null && oIci.ori==this.ori)) {
 			return;
 		}
 		else if(checkRobotInList(devant) != null) {

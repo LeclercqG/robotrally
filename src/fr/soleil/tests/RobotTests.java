@@ -312,7 +312,7 @@ public class RobotTests {
 
     @Test
     void obstaclesAreThings() {
-    	Thing thing = new Obstacle(p, p.getPosition(10, 10));
+    	Thing thing = new Obstacle(p, p.getPosition(10, 10),Orientation.NORTH);
     	ArrayList<Thing> list = new ArrayList<Thing>();
     	list.add(thing);
         
@@ -323,8 +323,8 @@ public class RobotTests {
     @Test
     void obstaclePreventsRobotFromMovingToThatPosition() {
         Position wallPosition = p.getPosition(10, 10);
-        Thing wall = new Obstacle(p, wallPosition);
-        Robot r2d2 = new Robot(p,p.getPosition(8, 10), Orientation.EAST);
+        Thing wall = new Obstacle(p, wallPosition, Orientation.EAST);
+        Robot r2d2 = new Robot(p, p.getPosition(8, 10), Orientation.EAST);
 
         r2d2.stepForward();
         assertEquals(p.getPosition(9, 10), r2d2.position());
@@ -335,6 +335,7 @@ public class RobotTests {
         r2d2.turnLeft();
         r2d2.stepForward();
         assertEquals(p.getPosition(9, 9), r2d2.position());
+
 
         assertEquals(wallPosition, wall.position());
     }
