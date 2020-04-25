@@ -323,7 +323,12 @@ public class RobotTests {
     @Test
     void obstaclePreventsRobotFromMovingToThatPosition() {
         Position wallPosition = p.getPosition(10, 10);
-        Thing wall = new Obstacle(p, wallPosition, Orientation.EAST);
+        Thing wall = new Obstacle(p, wallPosition, Orientation.WEST);
+        
+        Position wall2Position = p.getPosition(9, 9);
+        
+        Thing wall2 = new Obstacle(p, wallPosition, Orientation.NORTH);
+        
         Robot r2d2 = new Robot(p, p.getPosition(8, 10), Orientation.EAST);
 
         r2d2.stepForward();
@@ -336,8 +341,11 @@ public class RobotTests {
         r2d2.stepForward();
         assertEquals(p.getPosition(9, 9), r2d2.position());
 
+        r2d2.stepForward();
+        assertEquals(p.getPosition(9, 9), r2d2.position());
 
         assertEquals(wallPosition, wall.position());
+        assertEquals(wall2Position, wall2.position());
     }
     
     @Test
@@ -366,9 +374,9 @@ public class RobotTests {
 
     /*@Test
     void pushingAgainstRobotAgainstWall() {
-        Position r2d2Position = new Position(0, 0);
-        Position c3poPosition = new Position(1, 0);
-        Position wallPosition = new Position(2, 0);
+        Position r2d2Position = p.getPosition(0, 0);
+        Position c3poPosition = p.getPosition(1, 0);
+        Position wallPosition = p.getPosition(2, 0);
         Robot r2d2 = new Robot(p,r2d2Position, Orientation.EAST);
         Robot c3po = new Robot(p,c3poPosition, Orientation.NORTH);
         Thing wall = new Obstacle(p,wallPosition);

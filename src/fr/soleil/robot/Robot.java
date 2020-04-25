@@ -49,17 +49,19 @@ public class Robot extends Thing{
 		}
 	}
 	
+	public boolean canMove() { //vérifie si le robot peut bouger
+		Obstacle oDevant=checkObstacleInList(senseDirection(this.ori));
+		Obstacle oIci=checkObstacleInList(this.getPosition().getContenu());
+		if( (oDevant != null && oDevant.ori==this.ori.next().next()) ||  (oIci != null && oIci.ori==this.ori))
+			return false;
+		return true;
+	}
 
 	public void stepForward() {
-
-		ArrayList<Thing> devant = senseDirection(this.ori);
-		Obstacle oDevant=checkObstacleInList(devant);
-		ArrayList<Thing> ici = senseDirection(this.ori);
-		Obstacle oIci=checkObstacleInList(devant);
-		if( (oDevant != null && oDevant.ori==this.ori.next().next()) ||  (oIci != null && oIci.ori==this.ori)) {
+		if(!canMove()) {
 			return;
 		}
-		else if(checkRobotInList(devant) != null) {
+		else if(checkRobotInList(senseDirection(this.ori)) != null) {
 				shiftRobot(this, this.ori);
 			}
 		else moveDirection(this.ori);	
@@ -116,14 +118,14 @@ public class Robot extends Thing{
 	public boolean shiftRobot(Robot r, Orientation o) {
 		Robot robotDevant = checkRobotInList(r.senseDirection(o));
 		if(robotDevant != null) {
-			if(shiftRobot(robotDevant, o)) { //Devant dit ok on avance
+			if(shiftRobot(robotDevant, o)) { //On avance
 				r.moveDirection(o);
 				return true;
 			}
-			else return false;//Devant dit stop on avance pas
+			else return false;//On avance pas
 		}
 		else //On est au bout de la chaine de robot
-			if(checkObstacleInList(this.senseDirection(o)) != null) return false;//Il y a un obstacle
+			if(checkObstacleInList(r.senseDirection(o)) != null) return false;//Il y a un obstacle
 		r.moveDirection(o);
 		return true;
 	}
