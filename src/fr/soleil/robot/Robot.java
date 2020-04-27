@@ -1,21 +1,28 @@
 package fr.soleil.robot;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Robot extends Thing{
+	
 	private Orientation ori;
+	private Plateau plateau;
 
-	public Robot(Plateau plateau, Position initialPosition, Orientation initialOrientation) {
-		super(plateau, initialPosition);
+	public Robot(Plateau plateau, int x, int y, Orientation initialOrientation) {
+		this.x = x;
+		this.y = y;
 		this.ori=initialOrientation;
+		this.plateau = plateau;
+		this.plateau.getCell(x, y).setRobot(this);
 	}
 
 	public Orientation getOrientation() {
 		return this.ori;
 	}
-
-	public Position getPosition() {
-		return this.pos;
+	
+	public Cell getPosition() {
+		return plateau.getCell(x,y);
 	}
 
 	public void turnRight() {
@@ -27,52 +34,51 @@ public class Robot extends Thing{
 	}
 
 	public void moveContenu(int x, int y) {
-		this.pos.getContenu().remove(this);
-		this.pos=plateau.getPosition(x, y);
-		this.pos.getContenu().add(this);
+
+		plateau.getCell(this.x, this.y).setRobot(null);
+		this.x = x;
+		this.y = y;
+		plateau.getCell(x,y).setRobot(this);
 	}
 	
-	public void moveDirection(Orientation o) {
-		switch (o) {
+	public void moveDirection() {
+		switch (ori) {
 		case NORTH:
-			moveContenu(this.pos.x, this.pos.y-1);
+			moveContenu(this.x, this.y-1);
 			break;
 		case SOUTH:
-			moveContenu(this.pos.x, this.pos.y+1);
+			moveContenu(this.x, this.y+1);
 			break;	
 		case WEST:
-			moveContenu(this.pos.x-1, this.pos.y);
+			moveContenu(this.x-1, this.y);
 			break;
 		case EAST:
-			moveContenu(this.pos.x+1, this.pos.y);
+			moveContenu(this.x+1, this.y);
 			break;
 		}
 	}
 	
 	public boolean canMove(Orientation o) { //verifie si le robot peut bouger
-		
-		Mur oriDevant=checkMurInList(senseDirection(o));
-		Mur oriIci=checkMurInList(getPosition().getContenu());
-		
-		
-		if((oriDevant != null && oriDevant.getOrientation()==o.next().next()) ||  (oriIci != null && oriIci.getOrientation()==o))
-			return false;
-		return true;
+		Cell cell = plateau.getCell(x, y);
+		if (Objects.isNull(cell.getMurs())) {
+			return true;
+		}
+		return !cell.hasMurOn(o);
 	}
+		
+	
 
 	public void stepForward() {
-		if(!canMove(this.ori)) {
-			return;
-		}
-		else if(checkRobotInList(senseDirection(this.ori)) != null) {
-				shiftRobot(this, this.ori);
+		if(canMove(this.ori)) {	
+			if(!Objects.isNull(getNextCell().getRobot())) {
+				shiftRobot();
 			}
-		else moveDirection(this.ori);	
+		else moveDirection();
+		}
 	}
 
-
 	public void simulate(String string) {
-		for(int i=0;i<string.length();i++)
+		for(int i=0;i<string.length();i++) {
 			switch(string.charAt(i)) {
 			case 'R':
 				turnRight();
@@ -83,53 +89,119 @@ public class Robot extends Thing{
 			case 'F':
 				stepForward();
 				break;
+			default :
+				break;
 			}
+		}
 	}
 	
-	public ArrayList<Thing> senseDirection(Orientation o) {
-		switch (o) {
+	public Cell getNextCell() {
+		Cell cell = new Cell(true);
+		switch (this.ori) {
 		case NORTH:
-			return plateau.at(plateau.getPosition(this.pos.x,this.pos.y-1));
+			if(this.y == 0) {
+				break;
+			}
+			cell = plateau.getCell(x,y-1);
+			break;
 		case SOUTH:
-			return plateau.at(plateau.getPosition(this.pos.x,this.pos.y+1));
+			if(this.y == (plateau.getColumn(x).size()-1)) {
+				break;
+			}
+			cell = plateau.getCell(x, y+1);
+			break;
 		case WEST:
-			return plateau.at(plateau.getPosition(this.pos.x-1,this.pos.y));
+			if(this.x == 0) {
+				break;
+			}
+			cell = plateau.getCell(x-1,y);
+			break;
 		case EAST:
-			return plateau.at(plateau.getPosition(this.pos.x+1,this.pos.y));	
+			if(this.y == (plateau.getLine(y).size()-1)) {
+				break;
+			}
+			cell = plateau.getCell(x+1,y);
+			break;
 		}
-		return new ArrayList<Thing>();
+		
+		return cell;
 	}
 
-	public Robot checkRobotInList(ArrayList<Thing> list) {
-		for(Thing t : list) {
-			if(t instanceof Robot) {
-				return (Robot) t;
+	public void shiftRobot() {
+		List <Robot> robotList = new ArrayList<>();
+		boolean murDetected = false;
+		switch (ori) {
+		case NORTH:
+			for (int i = y; i > 0; i--) {
+				Cell cell = plateau.getCell(x, y-i);
+				if (cell.hasMurOn(ori)) { //On s'arrete
+					murDetected = true;
+					break;
+				}
+				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+					robotList.add(cell.getRobot());
+				}
 			}
+			if(!murDetected) {
+				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
+					r.stepForward();
+				}
+			}
+			break;
+		case SOUTH:
+			for (int i = y; i < plateau.getColumn(x).size()-1; i++) {
+				Cell cell = plateau.getCell(x, y+i);
+				if (cell.hasMurOn(ori)) { //On s'arrete
+					murDetected = true;
+					break;
+				}
+				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+					robotList.add(cell.getRobot());
+				}
+			}
+			if(!murDetected) {
+				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
+					r.stepForward();
+				}
+			}
+			break;
+		case WEST:
+			for (int i = x; i > 0; i--) {
+				Cell cell = plateau.getCell(x-i, y);
+				if (cell.hasMurOn(ori)) { //On s'arrete
+					murDetected = true;
+					break;
+				}
+				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+					robotList.add(cell.getRobot());
+				}
+			}
+			if(!murDetected) {
+				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
+					r.stepForward();
+				}
+			}
+			break;
+		case EAST:
+			for (int i = x; i < plateau.getColumn(y).size(); i++) {
+				Cell cell = plateau.getCell(x+i, y);
+				if (cell.hasMurOn(ori)) { //On s'arrete
+					murDetected = true;
+					break;
+				}
+				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+					robotList.add(cell.getRobot());
+				}
+			}
+			if(!murDetected) {
+				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
+					r.stepForward();
+				}
+			break;	
+			}	
 		}
-		return null;
-	}
 
-	public Mur checkMurInList(ArrayList<Thing> list) {
-		for(Thing t : list) {
-			if(t instanceof Mur) {
-				return (Mur) t;
-			}
-		}
-		return null;
-	}
+		
 
-	public boolean shiftRobot(Robot r, Orientation o) {
-		Robot robotDevant = checkRobotInList(r.senseDirection(o));
-		if(robotDevant != null) {
-			if(shiftRobot(robotDevant, o)) { //On avance
-				r.moveDirection(o);
-				return true;
-			}
-			else return false;//On avance pas
-		}
-		else //On est au bout de la chaine de robot
-			if(!r.canMove(o)) return false;//Il y a un obstacle
-		r.moveDirection(o);
-		return true;
 	}
 }

@@ -1,43 +1,45 @@
 package fr.soleil.robot;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
-import fr.soleil.robot.Position;
+import java.util.List;
 
 public class Plateau {
-	private Position plateau[][];
-	//private List<Object> colonne<List ligne<List<T extends Item<>>>;
-	//private Map<Integer,Object> colonne;
-	//private Map<Integer,Object> ligne;
-	//Map<Integer, Position> plateau;
-
-	public Plateau(int width, int length) {
-		this.plateau=new Position[width][length];
-		this.init();
-	}
 	
-	public void init() {
-		for(int i=0;i<this.plateau.length;i++) {
-			for(int j=0;j<this.plateau[i].length;j++) {
-				this.plateau[i][j]=new Position(i,j);
+	//TODO revoir les x et y 
+
+	//Liste de lignes qui contient une liste de colonnes qui contient des cellules
+	private List<List<Cell>> myPlateau;
+	
+	//add contstructor
+	public Plateau(int x, int y) {
+
+		//  /!\ creation plateau vide
+		myPlateau = new ArrayList<>();
+		
+		//creation de x lignes
+		for (int i = 0; i < x; i++) {
+			List<Cell> tmpLine = new ArrayList<>();
+			//creation de y colonnes
+			for (int j = 0; j < y; j++) {
+				tmpLine.add(new Cell());
 			}
+			myPlateau.add(tmpLine);
 		}
 	}
-	
-	public ArrayList<Thing> at(Position pos) {
-		
-		return pos.getContenu();
-	}
 
-	
-	public Position getPosition(int x, int y) {
-		return this.plateau[x][y];
+	public List<Cell> getLine(int y) {
+		List<Cell> myLine = new ArrayList<>();
+		for (List<Cell> column : myPlateau) {
+			myLine.add(column.get(y));
+		}
+		return myLine;
 	}
 	
-	public Position[][] getAllPositions(){
-		
-		return plateau;
+	public List<Cell>  getColumn(int x) {
+		return myPlateau.get(x);
 	}
-
+	
+	public Cell getCell(int x, int y) {
+		return myPlateau.get(x).get(y);
+	}
 }

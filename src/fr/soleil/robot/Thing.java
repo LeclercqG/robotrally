@@ -1,17 +1,16 @@
 package fr.soleil.robot;
 
-import fr.soleil.robot.Position;
+public abstract class Thing {
+		int x;
+		int y;
+		
+		
+		public int getX() {
+			return x;
+		}
+		public int getY() {
+			return y;
+		}
 
-public class Thing {
-	protected Position pos;
-	protected Plateau plateau;
-	
-	public Thing(Plateau plateau, Position position){
-		this.pos=position;
-		this.plateau = plateau;
-		position.getContenu().add(this);
-	}
-	public Position position() {
-		return this.pos;
-	}
+		
 }

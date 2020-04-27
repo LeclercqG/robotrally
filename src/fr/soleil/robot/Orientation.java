@@ -8,4 +8,8 @@ public enum Orientation {
     public Orientation previous() {
         return values()[(ordinal() + 3) % Orientation.values().length];
     }
+    
+    public static boolean NorthSouthAxe(Orientation ori) { //renvoie l axe sur lequel on est
+    	return ori.ordinal() % 2 == 0 ? true : false;
+    }
 }
