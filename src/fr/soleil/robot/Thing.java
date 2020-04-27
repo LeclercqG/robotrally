@@ -1,8 +1,9 @@
 package fr.soleil.robot;
 
 public abstract class Thing {
-		int x;
-		int y;
+		protected int x;
+		protected int y;
+		protected Plateau plateau;
 		
 		
 		public int getX() {
@@ -11,6 +12,5 @@ public abstract class Thing {
 		public int getY() {
 			return y;
 		}
-
 		
 }

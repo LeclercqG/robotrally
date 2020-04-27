@@ -7,7 +7,7 @@ public class Cell implements Icell {
 
 	private List<Mur> murs;
 	private Robot robot;
-	boolean cellNotInGame;
+	private boolean cellNotInGame;
 	
 	public Cell(boolean notInGame) {
 		cellNotInGame = notInGame;

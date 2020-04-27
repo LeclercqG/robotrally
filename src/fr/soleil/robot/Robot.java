@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Robot extends Thing{
+public class Robot extends OrientedThing{
 	
-	private Orientation ori;
-	private Plateau plateau;
-
 	public Robot(Plateau plateau, int x, int y, Orientation initialOrientation) {
 		this.x = x;
 		this.y = y;
@@ -95,37 +92,6 @@ public class Robot extends Thing{
 		}
 	}
 	
-	public Cell getNextCell() {
-		Cell cell = new Cell(true);
-		switch (this.ori) {
-		case NORTH:
-			if(this.y == 0) {
-				break;
-			}
-			cell = plateau.getCell(x,y-1);
-			break;
-		case SOUTH:
-			if(this.y == (plateau.getColumn(x).size()-1)) {
-				break;
-			}
-			cell = plateau.getCell(x, y+1);
-			break;
-		case WEST:
-			if(this.x == 0) {
-				break;
-			}
-			cell = plateau.getCell(x-1,y);
-			break;
-		case EAST:
-			if(this.y == (plateau.getLine(y).size()-1)) {
-				break;
-			}
-			cell = plateau.getCell(x+1,y);
-			break;
-		}
-		
-		return cell;
-	}
 
 	public void shiftRobot() {
 		List <Robot> robotList = new ArrayList<>();

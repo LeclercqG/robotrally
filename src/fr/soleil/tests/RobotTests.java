@@ -250,9 +250,10 @@ public class RobotTests {
 		assertEquals(expectedPosition, robot.getPosition());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
+	
 
 	@Test
-	void robotsAreAKindOfThing() {
+	void robotsAreThing() {
 		Thing thing = new Robot(p,0,0, Orientation.NORTH);
 
 		assertSame(thing, p.getCell(0, 0).getRobot());

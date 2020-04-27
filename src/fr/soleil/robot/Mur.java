@@ -1,9 +1,7 @@
 package fr.soleil.robot;
 
-public class Mur extends Thing {
+public class Mur extends OrientedThing {
 	
-	private Orientation ori;
-	private Plateau plateau;
 	
 	public Mur(Plateau plateau, int x, int y, Orientation ori) {
 		this.x = x;
