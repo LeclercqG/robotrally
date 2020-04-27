@@ -253,7 +253,7 @@ public class RobotTests {
 	
 
 	@Test
-	void robotsAreThing() {
+	void robotsAreThings() {
 		Thing thing = new Robot(p,0,0, Orientation.NORTH);
 
 		assertSame(thing, p.getCell(0, 0).getRobot());
@@ -282,17 +282,26 @@ public class RobotTests {
 	}
 
 	@Test
-	void obstaclesAreThings() {
+	void mursAreThings() {
 		Thing thing = new Mur(p, 10, 10,Orientation.NORTH);
 		ArrayList<Thing> list = new ArrayList<>();
 		list.add(thing);
-
-
 		assertEquals(list, p.getCell(10, 10).getMurs());
 	}
+	
+	@Test
+	void mursAreCreatedInTheirNeighborWithOppositeOrientation() {
+		int murX=10;
+		int murY=10;
+		Mur mur = new Mur(p, murX, murY,Orientation.NORTH);
+		assertSame(true, mur.getNextCell().hasMurOn(Orientation.SOUTH));
+		assertSame(murX, mur.getNextCell().getMurs().get(0).getX());
+		assertSame(murY-1, mur.getNextCell().getMurs().get(0).getY());
+	}
+	
 
 	/*@Test
-	void obstaclePreventsRobotFromMovingToThatPosition() {
+	void murPreventsRobotFromMovingToThatPosition() {
 		int wallX=10;
 		int wallY=10;
 		Thing wall = new Mur(p, wallX,wallY, Orientation.WEST);
@@ -341,8 +350,8 @@ public class RobotTests {
 		assertEquals(p.getCell(3, 0), bb8.getPosition());
 	}
 
-	@Test
-	void pushingAgainstRobotAgainstWall() {
+	/*@Test
+	void pushingAgainstRobotAgainstMur() {
 		int r2d2X=10;
 		int r2d2Y=10;
 		int c3poY=10;
@@ -361,5 +370,5 @@ public class RobotTests {
 		assertEquals(c3poX, c3po.getX());
 		assertEquals(wallX, wall.getX());
 		assertEquals(wallY, wall.getY());
-	}
+	}*/
 }
