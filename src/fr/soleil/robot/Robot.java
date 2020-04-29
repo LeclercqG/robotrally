@@ -92,82 +92,102 @@ public class Robot extends OrientedThing{
 		}
 	}
 	
-
-	public void shiftRobot() {
+	public void stepForwardRobotList(List <Robot> robotList) {
+		for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
+			r.stepForward();
+		}
+	}
+	
+	public void northShift (){
 		List <Robot> robotList = new ArrayList<>();
 		boolean murDetected = false;
+		for (int i = y; i > 0; i--) {
+			Cell cell = plateau.getCell(x, y-i);
+			if (cell.hasMurOn(ori)) { //On s'arrete
+				murDetected = true;
+				break;
+			}
+			else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+				robotList.add(cell.getRobot());
+			}
+		}
+		if(!murDetected) {
+			stepForwardRobotList(robotList);
+		} 
+	}
+	
+	public void southShift (){
+		List <Robot> robotList = new ArrayList<>();
+		boolean murDetected = false;
+		for (int i = y; i < plateau.getColumn(x).size()-1; i++) {
+			Cell cell = plateau.getCell(x, y+i);
+			if (cell.hasMurOn(ori)) { //On s'arrete
+				murDetected = true;
+				break;
+			}
+			else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+				robotList.add(cell.getRobot());
+			}
+		}
+		if(!murDetected) {
+			stepForwardRobotList(robotList);
+		}
+	}
+	
+	public void westShift (){
+		List <Robot> robotList = new ArrayList<>();
+		boolean murDetected = false;
+		for (int i = x; i > 0; i--) {
+			Cell cell = plateau.getCell(x-i, y);
+			if (cell.hasMurOn(ori)) { //On s'arrete
+				murDetected = true;
+				break;
+			}
+			else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+				robotList.add(cell.getRobot());
+			}
+		}
+		if(!murDetected) {
+			stepForwardRobotList(robotList);
+		}
+	}
+	
+	public void eastShift (){
+		List <Robot> robotList = new ArrayList<>();
+		boolean murDetected = false;
+		for (int i = x; i < plateau.getColumn(y).size(); i++) {
+			Cell cell = plateau.getCell(x+i, y);
+			if (cell.hasMurOn(ori)) { //On s'arrete
+				murDetected = true;
+				break;
+			}
+			else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
+				robotList.add(cell.getRobot());
+			}
+		}
+		if(!murDetected) {
+			stepForwardRobotList(robotList);
+		}
+	}
+	
+
+	public void shiftRobot() {
 		switch (ori) {
 		case NORTH:
-			for (int i = y; i > 0; i--) {
-				Cell cell = plateau.getCell(x, y-i);
-				if (cell.hasMurOn(ori)) { //On s'arrete
-					murDetected = true;
-					break;
-				}
-				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
-					robotList.add(cell.getRobot());
-				}
-			}
-			if(!murDetected) {
-				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
-					r.stepForward();
-				}
-			}
+			northShift();
+			//plateau.getColumn(x).addAll(y-robotList.size(), robotList);
 			break;
 		case SOUTH:
-			for (int i = y; i < plateau.getColumn(x).size()-1; i++) {
-				Cell cell = plateau.getCell(x, y+i);
-				if (cell.hasMurOn(ori)) { //On s'arrete
-					murDetected = true;
-					break;
-				}
-				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
-					robotList.add(cell.getRobot());
-				}
-			}
-			if(!murDetected) {
-				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
-					r.stepForward();
-				}
-			}
+			southShift();
 			break;
 		case WEST:
-			for (int i = x; i > 0; i--) {
-				Cell cell = plateau.getCell(x-i, y);
-				if (cell.hasMurOn(ori)) { //On s'arrete
-					murDetected = true;
-					break;
-				}
-				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
-					robotList.add(cell.getRobot());
-				}
-			}
-			if(!murDetected) {
-				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
-					r.stepForward();
-				}
-			}
+			westShift();
 			break;
 		case EAST:
-			for (int i = x; i < plateau.getColumn(y).size(); i++) {
-				Cell cell = plateau.getCell(x+i, y);
-				if (cell.hasMurOn(ori)) { //On s'arrete
-					murDetected = true;
-					break;
-				}
-				else if (!Objects.isNull(cell.getRobot())){ //on ajoute le robot à la liste
-					robotList.add(cell.getRobot());
-				}
-			}
-			if(!murDetected) {
-				for (Robot r : robotList) { //Pour chaque robot de la liste, on avance
-					r.stepForward();
-				}
+			eastShift();
 			break;	
 			}	
 		}
 
-		
-
-	}
 }
+
