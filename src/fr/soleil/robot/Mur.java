@@ -11,20 +11,28 @@ public class Mur extends OrientedThing {
 		this.plateau.getCell(x, y).addMur(this);
 		switch (this.ori) {
 		case NORTH:
-			this.y-=1;
+			new Mur(plateau, x, y-1, ori.next().next(), 0);
 			break;
 		case SOUTH:
-			this.y+=1;
+			new Mur(plateau, x, y+1, ori.next().next(), 0);
 			break;	
 		case WEST:
-			this.x-=1;
+			new Mur(plateau, x-1, y, ori.next().next(), 0);
 			break;
+			
 		case EAST:
-			this.x+=1;
+			new Mur(plateau, x+1, y, ori.next().next(), 0);
 			break;
 		}
-		this.ori=this.ori.next().next();
-		this.getNextCell().addMur(this);
+	}
+	
+	private Mur(Plateau plateau, int x, int y, Orientation ori, int a) {
+		this.x = x;
+		this.y = y;
+		this.plateau = plateau;
+		this.ori=ori;
+		this.plateau.getCell(x, y).addMur(this);
+		
 	}
 	
 	public Orientation getOrientation() {

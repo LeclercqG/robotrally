@@ -4,9 +4,9 @@ public class OrientedThing extends Thing{
 	
 	protected Orientation ori;
 	
-		public Cell getNextCell() {
+		public Cell getNextCell(Orientation o) {
 			Cell cell = new Cell(true);
-			switch (this.ori) {
+			switch (o) {
 			case NORTH:
 				if(this.y == 0) {
 					break;
