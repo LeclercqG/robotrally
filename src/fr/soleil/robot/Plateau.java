@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Plateau {
-	
-	//Liste de lignes qui contient une liste de colonnes qui contient des cellules
+
+	// Liste de lignes qui contient une liste de colonnes qui contient des cellules
 	private List<List<Cell>> myPlateau;
-	
-	//add contstructor
+
+	// add contstructor
 	public Plateau(int x, int y) {
 
-		//  /!\ creation plateau vide
+		// /!\ creation plateau vide
 		myPlateau = new ArrayList<>();
-		
-		//creation de x lignes
+
+		// creation de x lignes
 		for (int i = 0; i < x; i++) {
 			List<Cell> tmpLine = new ArrayList<>();
-			//creation de y colonnes
+			// creation de y colonnes
 			for (int j = 0; j < y; j++) {
 				tmpLine.add(new Cell());
 			}
@@ -32,11 +32,11 @@ public class Plateau {
 		}
 		return myLine;
 	}
-	
-	public List<Cell>  getColumn(int x) {
+
+	public List<Cell> getColumn(int x) {
 		return myPlateau.get(x);
 	}
-	
+
 	public Cell getCell(int x, int y) {
 		return myPlateau.get(x).get(y);
 	}

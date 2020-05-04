@@ -24,6 +24,7 @@ public class RobotTests {
 	private static final int plateauX = 60;
 	private static final int plateauY = 60;
 	private Plateau p;
+
 	@BeforeEach
 	void init() {
 		p = new Plateau(plateauX, plateauY);
@@ -42,7 +43,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromNorthToEast() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p, 0,0 , Orientation.NORTH);
+		Robot robot = new Robot(p, 0, 0, Orientation.NORTH);
 
 		robot.turnRight();
 
@@ -55,7 +56,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromEastToSouth() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.EAST);
+		Robot robot = new Robot(p, 0, 0, Orientation.EAST);
 
 		robot.turnRight();
 
@@ -67,7 +68,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromSouthToWest() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.SOUTH);
+		Robot robot = new Robot(p, 0, 0, Orientation.SOUTH);
 
 		robot.turnRight();
 
@@ -79,7 +80,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromWestToNorth() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.WEST);
+		Robot robot = new Robot(p, 0, 0, Orientation.WEST);
 
 		robot.turnRight();
 
@@ -91,7 +92,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromNorthToWest() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.NORTH);
+		Robot robot = new Robot(p, 0, 0, Orientation.NORTH);
 
 		robot.turnLeft();
 
@@ -103,7 +104,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromWestToSouth() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.WEST);
+		Robot robot = new Robot(p, 0, 0, Orientation.WEST);
 
 		robot.turnLeft();
 
@@ -115,7 +116,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromSouthToEast() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.SOUTH);
+		Robot robot = new Robot(p, 0, 0, Orientation.SOUTH);
 
 		robot.turnLeft();
 
@@ -127,7 +128,7 @@ public class RobotTests {
 	@Test
 	void changesTheDirectionFromEastToNorth() {
 		Cell initialPosition = p.getCell(0, 0);
-		Robot robot = new Robot(p,0,0, Orientation.EAST);
+		Robot robot = new Robot(p, 0, 0, Orientation.EAST);
 
 		robot.turnLeft();
 
@@ -139,7 +140,7 @@ public class RobotTests {
 	@Test
 	void decreaseTheYCoordinateByOneWhenFacingNorth() {
 		Orientation initialOrientation = Orientation.NORTH;
-		Robot robot = new Robot(p,20, 20, initialOrientation);
+		Robot robot = new Robot(p, 20, 20, initialOrientation);
 
 		robot.stepForward();
 
@@ -151,7 +152,7 @@ public class RobotTests {
 	@Test
 	void increaseTheYCoordinateByOneWhenFacingSouth() {
 		Orientation initialOrientation = Orientation.SOUTH;
-		Robot robot = new Robot(p,20, 20, initialOrientation);
+		Robot robot = new Robot(p, 20, 20, initialOrientation);
 
 		robot.stepForward();
 
@@ -163,7 +164,7 @@ public class RobotTests {
 	@Test
 	void increasesTheXCoordinateByOneWhenFacingEast() {
 		Orientation initialOrientation = Orientation.EAST;
-		Robot robot = new Robot(p,0, 0, initialOrientation);
+		Robot robot = new Robot(p, 0, 0, initialOrientation);
 
 		robot.stepForward();
 
@@ -175,7 +176,7 @@ public class RobotTests {
 	@Test
 	void decreasesTheXCoordinateByOneWhenFacingWest() {
 		Orientation initialOrientation = Orientation.WEST;
-		Robot robot = new Robot(p,20, 20, initialOrientation);
+		Robot robot = new Robot(p, 20, 20, initialOrientation);
 
 		robot.stepForward();
 
@@ -187,8 +188,8 @@ public class RobotTests {
 	@Test
 	void movingOneRobotHasNoEffectOnAnotherRobot() {
 		Cell initialPosition = p.getCell(42, 51);
-		Robot r2d2 = new Robot(p,42,51, Orientation.NORTH);
-		Robot c3po = new Robot(p,40,40, Orientation.NORTH);
+		Robot r2d2 = new Robot(p, 42, 51, Orientation.NORTH);
+		Robot c3po = new Robot(p, 40, 40, Orientation.NORTH);
 
 		c3po.stepForward();
 
@@ -199,7 +200,7 @@ public class RobotTests {
 
 	@Test
 	void instructionsStartingNorthAndMoveEastAndNorth() {
-		Robot robot = new Robot(p,20, 20, Orientation.NORTH);
+		Robot robot = new Robot(p, 20, 20, Orientation.NORTH);
 
 		robot.simulate("RFFLFL");
 
@@ -212,7 +213,7 @@ public class RobotTests {
 
 	@Test
 	void instructionsToMoveWestAndNorth() {
-		Robot robot = new Robot(p,20, 20, Orientation.NORTH);
+		Robot robot = new Robot(p, 20, 20, Orientation.NORTH);
 
 		robot.simulate("LFFFRFLF");
 
@@ -225,7 +226,7 @@ public class RobotTests {
 
 	@Test
 	void instructionsToMoveWestAndSouth() {
-		Robot robot = new Robot(p,20, 20, Orientation.EAST);
+		Robot robot = new Robot(p, 20, 20, Orientation.EAST);
 
 		robot.simulate("RRFFFFFLF");
 
@@ -238,7 +239,7 @@ public class RobotTests {
 
 	@Test
 	void instructionsStartingSouthAndMoveEastAndNorth() {
-		Robot robot = new Robot(p,20, 20, Orientation.SOUTH);
+		Robot robot = new Robot(p, 20, 20, Orientation.SOUTH);
 
 		robot.simulate("LFFFRRRFLLLL");
 
@@ -248,18 +249,17 @@ public class RobotTests {
 		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
-	
 
 	@Test
 	void robotsAreThings() {
-		Thing thing = new Robot(p,0,0, Orientation.NORTH);
+		Thing thing = new Robot(p, 0, 0, Orientation.NORTH);
 
 		assertSame(thing, p.getCell(0, 0).getRobot());
 	}
 
 	@Test
 	void afterMovingRobotFindItAtNewPositionInPlateau() {
-		Robot robot = new Robot(p,42,51, Orientation.NORTH);
+		Robot robot = new Robot(p, 42, 51, Orientation.NORTH);
 
 		robot.stepForward();
 
@@ -269,10 +269,10 @@ public class RobotTests {
 	@Test
 	void robotSensesThingJustInFrontOfItself() {
 		Orientation oriR2d2 = Orientation.NORTH;
-		Orientation oriC3po = Orientation.WEST;		
-		Robot r2d2 = new Robot(p,20, 20, oriR2d2);
-		Robot c3po = new Robot(p,2, 0, oriC3po);
-		new Mur(p,20, 19, Orientation.SOUTH);
+		Orientation oriC3po = Orientation.WEST;
+		Robot r2d2 = new Robot(p, 20, 20, oriR2d2);
+		Robot c3po = new Robot(p, 2, 0, oriC3po);
+		new Mur(p, 20, 19, Orientation.SOUTH);
 		List<Mur> sensedByR2D2 = r2d2.getNextCell(oriR2d2).getMurs();
 		List<Mur> sensedByC3PO = c3po.getNextCell(oriC3po).getMurs();
 		assertFalse(sensedByR2D2.isEmpty());
@@ -281,28 +281,28 @@ public class RobotTests {
 
 	@Test
 	void mursAreThings() {
-		Thing thing = new Mur(p, 10, 10,Orientation.NORTH);
+		Thing thing = new Mur(p, 10, 10, Orientation.NORTH);
 		ArrayList<Thing> list = new ArrayList<>();
 		list.add(thing);
 		assertEquals(list, p.getCell(10, 10).getMurs());
 	}
-	
+
 	@Test
 	void mursAreCreatedInTheirNeighborWithOppositeOrientation() {
-		int murX=10;
-		int murY=10;
-		Orientation oriMur= Orientation.NORTH;
-		Mur mur = new Mur(p, murX, murY,oriMur);
+		int murX = 10;
+		int murY = 10;
+		Orientation oriMur = Orientation.NORTH;
+		Mur mur = new Mur(p, murX, murY, oriMur);
 		assertSame(true, mur.getNextCell(oriMur).hasMurOn(Orientation.SOUTH));
 		assertSame(murX, mur.getNextCell(oriMur).getMurs().get(0).getX());
-		assertSame(murY-1, mur.getNextCell(oriMur).getMurs().get(0).getY());
+		assertSame(murY - 1, mur.getNextCell(oriMur).getMurs().get(0).getY());
 	}
-	
+
 	@Test
 	void murPreventsRobotFromMovingToThatPosition() {
-		int wallX=10;
-		int wallY=10;
-		Thing wall = new Mur(p, wallX,wallY, Orientation.WEST);
+		int wallX = 10;
+		int wallY = 10;
+		Thing wall = new Mur(p, wallX, wallY, Orientation.WEST);
 
 		Robot r2d2 = new Robot(p, 8, 10, Orientation.EAST);
 
@@ -321,8 +321,8 @@ public class RobotTests {
 
 	@Test
 	void movingIntoAnotherRobotPushesIt() {
-		Robot r2d2 = new Robot(p,10, 10, Orientation.EAST);
-		Robot c3po = new Robot(p,11, 10, Orientation.NORTH);
+		Robot r2d2 = new Robot(p, 10, 10, Orientation.EAST);
+		Robot c3po = new Robot(p, 11, 10, Orientation.NORTH);
 
 		r2d2.stepForward();
 
@@ -345,15 +345,15 @@ public class RobotTests {
 
 	@Test
 	void pushingAgainstRobotAgainstMur() {
-		int r2d2X=10;
-		int r2d2Y=10;
-		int c3poX=11;
-		int c3poY=10;
-		int wallX=11;
-		int wallY=10;
+		int r2d2X = 10;
+		int r2d2Y = 10;
+		int c3poX = 11;
+		int c3poY = 10;
+		int wallX = 11;
+		int wallY = 10;
 		Robot r2d2 = new Robot(p, r2d2X, r2d2Y, Orientation.EAST);
-		Robot c3po = new Robot(p,c3poX,c3poY, Orientation.NORTH);
-		Mur wall = new Mur(p,wallX,wallY, Orientation.EAST);
+		Robot c3po = new Robot(p, c3poX, c3poY, Orientation.NORTH);
+		Mur wall = new Mur(p, wallX, wallY, Orientation.EAST);
 
 		r2d2.stepForward();
 		assertTrue(wall.getNextCell(Orientation.EAST).hasMurOn(Orientation.WEST));
@@ -369,20 +369,36 @@ public class RobotTests {
 	@Test
 	void trousAreThings() {
 		Thing thing = new Trou(p, 10, 10);
-		
+
 		assertSame(thing, p.getCell(10, 10).getTrou());
 	}
-	
+
 	@Test
 	void thingsCannotBeCreatedOnTrou() {
-		int x=0;
-		int y=0;
-		Orientation oriWall= Orientation.EAST;
-		new Trou(p,x,y);
-		new Robot(p,x,y, Orientation.NORTH);
-		new Mur(p,x,y, oriWall);
-		
+		int x = 0;
+		int y = 0;
+		Orientation oriWall = Orientation.EAST;
+		new Trou(p, x, y);
+		new Robot(p, x, y, Orientation.NORTH);
+		new Mur(p, x, y, oriWall);
+
 		assertSame(null, p.getCell(x, y).getRobot());
 		assertSame(false, p.getCell(x, y).hasMurOn(oriWall));
+	}
+
+	/*@Test
+	void drapeauAreThings() {
+		Thing thing = new Drapeau(p, 10, 10);
+		
+		assertSame(thing, p.getCell(10, 10).getDrapeau());
+	}*/
+	
+	@Test
+	void drapeauHaveRank() {
+		Drapeau drapeau1 = new Drapeau(p, 10, 10);
+		Drapeau drapeau2= new Drapeau(p, 11, 11);
+		
+		assertEquals(1, drapeau1.getRang());
+		assertEquals(2, drapeau2.getRang());
 	}
 }
