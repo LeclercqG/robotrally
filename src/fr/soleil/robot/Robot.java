@@ -6,12 +6,14 @@ import java.util.Objects;
 
 public class Robot extends OrientedThing{
 
-	public Robot(Plateau plateau, int x, int y, Orientation initialOrientation) {
-		this.x = x;
-		this.y = y;
-		this.ori=initialOrientation;
-		this.plateau = plateau;
-		this.plateau.getCell(x, y).setRobot(this);
+	public Robot(Plateau p, int x, int y, Orientation initialOrientation) {
+		if(p.getCell(x,y).getRobot()==null && p.getCell(x,y).getTrou()==null) {
+			this.x = x;
+			this.y = y;
+			this.ori=initialOrientation;
+			this.plateau = p;
+			this.plateau.getCell(x, y).setRobot(this);
+		}
 	}
 
 	public Orientation getOrientation() {

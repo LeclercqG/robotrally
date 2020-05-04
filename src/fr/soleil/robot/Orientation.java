@@ -9,7 +9,7 @@ public enum Orientation {
         return values()[(ordinal() + 3) % Orientation.values().length];
     }
     
-    public static boolean NorthSouthAxe(Orientation ori) { //renvoie l axe sur lequel on est
+    public static boolean northSouthAxe(Orientation ori) { //renvoie l axe sur lequel on est
     	return ori.ordinal() % 2 == 0 ? true : false;
     }
 }

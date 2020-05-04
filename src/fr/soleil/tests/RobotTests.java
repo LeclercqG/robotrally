@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.Position;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +18,7 @@ import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Plateau;
 import fr.soleil.robot.Robot;
 import fr.soleil.robot.Thing;
+import fr.soleil.robot.Trou;
 
 public class RobotTests {
 	private static final int plateauX = 60;
@@ -29,7 +28,7 @@ public class RobotTests {
 	void init() {
 		p = new Plateau(plateauX, plateauY);
 	}
-/*
+
 	@Test
 	void robotsAreCreatedWithAPositionAndOrientation() {
 		Orientation initialOrientation = Orientation.NORTH;
@@ -157,7 +156,6 @@ public class RobotTests {
 		robot.stepForward();
 
 		Cell expectedPosition = p.getCell(20, 21);
-		System.out.println(robot.getX() + "/" + robot.getY());
 		assertEquals(expectedPosition, robot.getPosition());
 		assertEquals(initialOrientation, robot.getOrientation());
 	}
@@ -190,7 +188,7 @@ public class RobotTests {
 	void movingOneRobotHasNoEffectOnAnotherRobot() {
 		Cell initialPosition = p.getCell(42, 51);
 		Robot r2d2 = new Robot(p,42,51, Orientation.NORTH);
-		Robot c3po = new Robot(p,42,51, Orientation.NORTH);
+		Robot c3po = new Robot(p,40,40, Orientation.NORTH);
 
 		c3po.stepForward();
 
@@ -270,13 +268,13 @@ public class RobotTests {
 
 	@Test
 	void robotSensesThingJustInFrontOfItself() {
-
-		Robot r2d2 = new Robot(p,20, 20, Orientation.NORTH);
-		Robot c3po = new Robot(p,2, 0, Orientation.WEST);
+		Orientation oriR2d2 = Orientation.NORTH;
+		Orientation oriC3po = Orientation.WEST;		
+		Robot r2d2 = new Robot(p,20, 20, oriR2d2);
+		Robot c3po = new Robot(p,2, 0, oriC3po);
 		new Mur(p,20, 19, Orientation.SOUTH);
-		List<Mur> sensedByR2D2 = r2d2.getNextCell().getMurs();
-		List<Mur> sensedByC3PO = c3po.getNextCell().getMurs();
-
+		List<Mur> sensedByR2D2 = r2d2.getNextCell(oriR2d2).getMurs();
+		List<Mur> sensedByC3PO = c3po.getNextCell(oriC3po).getMurs();
 		assertFalse(sensedByR2D2.isEmpty());
 		assertTrue(sensedByC3PO.isEmpty());
 	}
@@ -289,7 +287,18 @@ public class RobotTests {
 		assertEquals(list, p.getCell(10, 10).getMurs());
 	}
 	
-	/*@Test
+	@Test
+	void mursAreCreatedInTheirNeighborWithOppositeOrientation() {
+		int murX=10;
+		int murY=10;
+		Orientation oriMur= Orientation.NORTH;
+		Mur mur = new Mur(p, murX, murY,oriMur);
+		assertSame(true, mur.getNextCell(oriMur).hasMurOn(Orientation.SOUTH));
+		assertSame(murX, mur.getNextCell(oriMur).getMurs().get(0).getX());
+		assertSame(murY-1, mur.getNextCell(oriMur).getMurs().get(0).getY());
+	}
+	
+	@Test
 	void murPreventsRobotFromMovingToThatPosition() {
 		int wallX=10;
 		int wallY=10;
@@ -305,17 +314,12 @@ public class RobotTests {
 
 		r2d2.turnLeft();
 		r2d2.stepForward();
-		assertEquals(p.getCell(9, 9), r2d2.getPosition());
-
-		r2d2.stepForward();
-		assertEquals(p.getCell(9, 9), r2d2.getPosition());
 
 		assertEquals(wallX, wall.getX());
 		assertEquals(wallY, wall.getY());
-		assertEquals(wall2Position, wall2.getPosition());
-	}*/
+	}
 
-	/*@Test
+	@Test
 	void movingIntoAnotherRobotPushesIt() {
 		Robot r2d2 = new Robot(p,10, 10, Orientation.EAST);
 		Robot c3po = new Robot(p,11, 10, Orientation.NORTH);
@@ -324,7 +328,7 @@ public class RobotTests {
 
 		assertEquals(p.getCell(11, 10), r2d2.getPosition());
 		assertEquals(p.getCell(12, 10), c3po.getPosition());
-	}*/
+	}
 
 	@Test
 	void pushingIsTransitive() {
@@ -361,15 +365,12 @@ public class RobotTests {
 		assertEquals(wallX, wall.getX());
 		assertEquals(wallY, wall.getY());
 	}
+
+	@Test
+	void trousAreThings() {
+		Thing thing = new Trou(p, 10, 10);
+		
+		assertSame(thing, p.getCell(10, 10).getTrou());
+	}
 	
-	/*@Test
-	void mursAreCreatedInTheirNeighborWithOppositeOrientation() {
-		int murX=10;
-		int murY=10;
-		Orientation ori= Orientation.NORTH
-		Mur mur = new Mur(p, murX, murY,Ori);
-		assertSame(true, mur.getNextCell(ori).hasMurOn(Orientation.SOUTH));
-		assertSame(murX, mur.getNextCell(ori).getMurs().get(0).getX());
-		assertSame(murY-1, mur.getNextCell(ori).getMurs().get(0).getY());
-	}*/
 }

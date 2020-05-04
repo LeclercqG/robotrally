@@ -7,6 +7,16 @@ public class Cell implements Icell {
 
 	private List<Mur> murs;
 	private Robot robot;
+	private Trou trou;
+
+	public Trou getTrou() {
+		return trou;
+	}
+
+	public void setTrou(Trou trou) {
+		this.trou = trou;
+	}
+
 	private boolean cellNotInGame;
 	
 	public Cell(boolean notInGame) {
@@ -14,7 +24,7 @@ public class Cell implements Icell {
 	}
 	
 	public Cell() {
-		murs = new ArrayList<Mur>();
+		murs = new ArrayList<>();
 	}
 	
 	public List<Mur> getMurs() {
