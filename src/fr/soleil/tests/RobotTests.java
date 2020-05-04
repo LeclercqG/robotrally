@@ -373,4 +373,17 @@ public class RobotTests {
 		assertSame(thing, p.getCell(10, 10).getTrou());
 	}
 	
+	@Test
+	void thingsCannotBeCreatedOnTrou() {
+		int x=0;
+		int y=0;
+		Orientation oriWall= Orientation.EAST;
+		new Trou(p,x,y);
+		new Robot(p,x,y, Orientation.NORTH);
+		new Mur(p,x,y, oriWall);
+		
+		assertSame(null, p.getCell(x, y).getRobot());
+		assertSame(false, p.getCell(x, y).hasMurOn(oriWall));
+	}
+	
 }
