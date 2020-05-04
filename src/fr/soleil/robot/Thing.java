@@ -13,4 +13,8 @@ public abstract class Thing {
 			return y;
 		}
 		
+		public Cell getItCell() {
+			return plateau.getCell(x,y);
+		}
+		
 }

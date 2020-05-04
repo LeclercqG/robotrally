@@ -9,7 +9,7 @@ public class Trou extends Thing {
 			this.x = x;
 			this.y = y;
 			this.plateau = p;
-			this.plateau.getCell(x, y).setTrou(this);
+			this.getItCell().setTrou(this);
 		}
 	}
 }

@@ -32,11 +32,11 @@ public class RobotTests {
 	@Test
 	void robotsAreCreatedWithAPositionAndOrientation() {
 		Orientation initialOrientation = Orientation.NORTH;
-		Cell initialPosition = p.getCell(1, 1);
+		Cell initialCell = p.getCell(1, 1);
 		Robot robot = new Robot(p, 1, 1, initialOrientation);
 
 		assertEquals(initialOrientation, robot.getOrientation());
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialCell, robot.getItCell());
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class RobotTests {
 		robot.turnRight();
 
 		Orientation expectedOrientation = Orientation.EAST;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 
 	}
@@ -60,7 +60,7 @@ public class RobotTests {
 		robot.turnRight();
 
 		Orientation expectedOrientation = Orientation.SOUTH;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -72,7 +72,7 @@ public class RobotTests {
 		robot.turnRight();
 
 		Orientation expectedOrientation = Orientation.WEST;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -84,7 +84,7 @@ public class RobotTests {
 		robot.turnRight();
 
 		Orientation expectedOrientation = Orientation.NORTH;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -96,7 +96,7 @@ public class RobotTests {
 		robot.turnLeft();
 
 		Orientation expectedOrientation = Orientation.WEST;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -108,7 +108,7 @@ public class RobotTests {
 		robot.turnLeft();
 
 		Orientation expectedOrientation = Orientation.SOUTH;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -120,7 +120,7 @@ public class RobotTests {
 		robot.turnLeft();
 
 		Orientation expectedOrientation = Orientation.EAST;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -132,7 +132,7 @@ public class RobotTests {
 		robot.turnLeft();
 
 		Orientation expectedOrientation = Orientation.NORTH;
-		assertEquals(initialPosition, robot.getPosition());
+		assertEquals(initialPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -144,7 +144,7 @@ public class RobotTests {
 		robot.stepForward();
 
 		Cell expectedPosition = p.getCell(20, 19);
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(initialOrientation, robot.getOrientation());
 	}
 
@@ -156,7 +156,7 @@ public class RobotTests {
 		robot.stepForward();
 
 		Cell expectedPosition = p.getCell(20, 21);
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(initialOrientation, robot.getOrientation());
 	}
 
@@ -168,7 +168,7 @@ public class RobotTests {
 		robot.stepForward();
 
 		Cell expectedPosition = p.getCell(1, 0);
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(initialOrientation, robot.getOrientation());
 	}
 
@@ -180,7 +180,7 @@ public class RobotTests {
 		robot.stepForward();
 
 		Cell expectedPosition = p.getCell(19, 20);
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(initialOrientation, robot.getOrientation());
 	}
 
@@ -192,8 +192,8 @@ public class RobotTests {
 
 		c3po.stepForward();
 
-		assertNotEquals(initialPosition, c3po.getPosition());
-		assertEquals(initialPosition, r2d2.getPosition());
+		assertNotEquals(initialPosition, c3po.getItCell());
+		assertEquals(initialPosition, r2d2.getItCell());
 		assertEquals(p.getCell(42, 51), initialPosition);
 	}
 
@@ -206,7 +206,7 @@ public class RobotTests {
 		Cell expectedPosition = p.getCell(22, 19);
 		Orientation expectedOrientation = Orientation.WEST;
 
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -219,7 +219,7 @@ public class RobotTests {
 		Cell expectedPosition = p.getCell(16, 19);
 		Orientation expectedOrientation = Orientation.WEST;
 
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -232,7 +232,7 @@ public class RobotTests {
 		Cell expectedPosition = p.getCell(15, 21);
 		Orientation expectedOrientation = Orientation.SOUTH;
 
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 
@@ -245,7 +245,7 @@ public class RobotTests {
 		Cell expectedPosition = p.getCell(23, 19);
 		Orientation expectedOrientation = Orientation.NORTH;
 
-		assertEquals(expectedPosition, robot.getPosition());
+		assertEquals(expectedPosition, robot.getItCell());
 		assertEquals(expectedOrientation, robot.getOrientation());
 	}
 	
@@ -307,10 +307,10 @@ public class RobotTests {
 		Robot r2d2 = new Robot(p, 8, 10, Orientation.EAST);
 
 		r2d2.stepForward();
-		assertEquals(p.getCell(9, 10), r2d2.getPosition());
+		assertEquals(p.getCell(9, 10), r2d2.getItCell());
 
 		r2d2.stepForward();
-		assertEquals(p.getCell(9, 10), r2d2.getPosition());
+		assertEquals(p.getCell(9, 10), r2d2.getItCell());
 
 		r2d2.turnLeft();
 		r2d2.stepForward();
@@ -326,8 +326,8 @@ public class RobotTests {
 
 		r2d2.stepForward();
 
-		assertEquals(p.getCell(11, 10), r2d2.getPosition());
-		assertEquals(p.getCell(12, 10), c3po.getPosition());
+		assertEquals(p.getCell(11, 10), r2d2.getItCell());
+		assertEquals(p.getCell(12, 10), c3po.getItCell());
 	}
 
 	@Test
@@ -338,9 +338,9 @@ public class RobotTests {
 
 		r2d2.stepForward();
 
-		assertEquals(p.getCell(1, 0), r2d2.getPosition());
-		assertEquals(p.getCell(2, 0), c3po.getPosition());
-		assertEquals(p.getCell(3, 0), bb8.getPosition());
+		assertEquals(p.getCell(1, 0), r2d2.getItCell());
+		assertEquals(p.getCell(2, 0), c3po.getItCell());
+		assertEquals(p.getCell(3, 0), bb8.getItCell());
 	}
 
 	@Test
@@ -385,5 +385,4 @@ public class RobotTests {
 		assertSame(null, p.getCell(x, y).getRobot());
 		assertSame(false, p.getCell(x, y).hasMurOn(oriWall));
 	}
-	
 }

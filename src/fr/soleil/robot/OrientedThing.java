@@ -34,5 +34,9 @@ public class OrientedThing extends Thing{
 			}
 			
 			return cell;
-			}
+		}
+		
+		public Orientation getOrientation() {
+			return this.ori;
+		}
 }

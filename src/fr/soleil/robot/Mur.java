@@ -1,7 +1,5 @@
 package fr.soleil.robot;
 
-import java.util.Objects;
-
 public class Mur extends OrientedThing {
 	
 	
@@ -11,7 +9,7 @@ public class Mur extends OrientedThing {
 			this.y = y;
 			this.plateau = p;
 			this.ori=ori;
-			this.plateau.getCell(x, y).addMur(this);
+			this.getItCell().addMur(this);
 			switch (this.ori) {
 				case NORTH:
 					new Mur(p, x, y-1, ori.next().next(), 0);
@@ -30,21 +28,16 @@ public class Mur extends OrientedThing {
 		}
 	}
 	
-	private Mur(Plateau plateau, int x, int y, Orientation ori, int a) {
+	private Mur(Plateau p, int x, int y, Orientation ori, int a) {
 		this.x = x;
 		this.y = y;
-		this.plateau = plateau;
+		this.plateau = p;
 		this.ori=ori;
-		this.plateau.getCell(x, y).addMur(this);
-		
+		this.getItCell().addMur(this);
 	}
 	
+	@Override
 	public Orientation getOrientation() {
 		return ori;
-	}
-	
-	public Cell getPosition() {
-		return plateau.getCell(x, y);
-	}
-	
+	}		
 }

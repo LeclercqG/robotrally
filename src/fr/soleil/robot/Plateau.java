@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Plateau {
 	
-	//TODO revoir les x et y 
-
 	//Liste de lignes qui contient une liste de colonnes qui contient des cellules
 	private List<List<Cell>> myPlateau;
 	
