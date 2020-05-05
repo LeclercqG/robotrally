@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.soleil.robot.Cell;
+import fr.soleil.robot.Drapeau;
 import fr.soleil.robot.Mur;
 import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Plateau;

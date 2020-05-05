@@ -3,8 +3,6 @@ package fr.soleil.robot;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.soleil.tests.Drapeau;
-
 public class Cell implements Icell {
 
 	private List<Mur> murs;

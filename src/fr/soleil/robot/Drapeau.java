@@ -1,11 +1,7 @@
-package fr.soleil.tests;
-
-
-import fr.soleil.robot.Plateau;
-import fr.soleil.robot.Thing;
+package fr.soleil.robot;
 
 public class Drapeau extends Thing {
-	//TODO trouver mieu qu'un static (qui pose problème lors des tests)
+	//TODO trouver mieu qu'un static (qui pose problï¿½me lors des tests)
 	private static int nbrDrapeau=1;
 	private int rang;
 	public int getRang() {
