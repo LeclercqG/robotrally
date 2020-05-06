@@ -63,19 +63,23 @@ public class Robot extends OrientedThing {
 	}
 
 	public void moveDirection(Orientation o) {
-		switch (o) {
-			case NORTH:
-				transferRobotToCell(this.x, this.y - 1, o);
-				break;
-			case SOUTH:
-				transferRobotToCell(this.x, this.y + 1, o);
-				break;
-			case WEST:
-				transferRobotToCell(this.x - 1, this.y, o);
-				break;
-			case EAST:
-				transferRobotToCell(this.x + 1, this.y, o);
-				break;
+		if (!this.getNextCell(o).cellNotInGame()) {
+			switch (o) {
+				case NORTH:
+					transferRobotToCell(this.x, this.y - 1, o);
+					break;
+				case SOUTH:
+					transferRobotToCell(this.x, this.y + 1, o);
+					break;
+				case WEST:
+					transferRobotToCell(this.x - 1, this.y, o);
+					break;
+				case EAST:
+					transferRobotToCell(this.x + 1, this.y, o);
+					break;
+			}
+		}else {
+			respawn();
 		}
 	}
 
@@ -94,7 +98,7 @@ public class Robot extends OrientedThing {
 			} else {
 				moveDirection(ori);
 			}
-			triggerDestruction();
+			triggerTrou();
 		}
 	}
 	
@@ -106,8 +110,8 @@ public class Robot extends OrientedThing {
 		}
 	}
 	
-	private void triggerDestruction() {
-		if( getItCell().getTrou() != null ) {
+	private void triggerTrou() {
+		if( getItCell().getTrou() != null) {
 			respawn();
 		}
 	}

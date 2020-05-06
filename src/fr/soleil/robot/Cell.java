@@ -20,6 +20,10 @@ public class Cell implements Icell {
 		murs = new ArrayList<>();
 		laserActive = new ArrayList<>();
 	}
+	
+	public boolean cellNotInGame() {
+		return cellNotInGame;
+	}
 
 	public Drapeau getDrapeau() {
 		return drapeau;
