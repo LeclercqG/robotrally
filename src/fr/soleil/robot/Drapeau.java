@@ -3,8 +3,7 @@ package fr.soleil.robot;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Drapeau extends Thing {
-	//TODO trouver mieu qu'un static (qui pose probleme lors des tests)
-
+	
 	private static final AtomicInteger nbDrapeau = new AtomicInteger(0);
 
 	private int rang;

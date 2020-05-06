@@ -1,7 +1,5 @@
 package fr.soleil.robot;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Robot extends OrientedThing {
@@ -10,7 +8,7 @@ public class Robot extends OrientedThing {
 	private int dernierDrapeau;
 	private int nbrRespawn;
 	private int vie;
-	
+
 	public Robot(Plateau p, int x, int y, Orientation initialOrientation) {
 		if (p.getCell(x, y).getRobot() == null && p.getCell(x, y).getTrou() == null) {
 			this.x = x;
@@ -109,10 +107,10 @@ public class Robot extends OrientedThing {
 	
 	private void triggerDrapeau() {
 		Drapeau d;
-		if((d = getItCell().getDrapeau()) != null && d.getRang() == dernierDrapeau+1) {
-			respawnX = d.getX();
-			respawnY= d.getY();
-			dernierDrapeau++;
+		if((d = this.getItCell().getDrapeau()) != null && d.getRang() == this.dernierDrapeau+1) {
+			this.respawnX = d.getX();
+			this.respawnY= d.getY();
+			this.dernierDrapeau++;
 		}
 	}
 
@@ -131,6 +129,7 @@ public class Robot extends OrientedThing {
 			default:
 				break;
 			}
+			triggerDrapeau();
 		}
 	}
 

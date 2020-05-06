@@ -437,9 +437,9 @@ public class RobotTests {
 		assertEquals(2, drapeau2.getRang());
 	}
 	
-	/*@Test
+	@Test
 	void robotsSteppingOnNextDrapeauUpdateRespwan() {
-		int x=11;
+		int x=10;
 		int y=11;
 		int drapX=10;
 		int drap1Y=9;
@@ -448,15 +448,15 @@ public class RobotTests {
 		new Drapeau(p, drapX, drap2Y);
 
 		Robot robot=new Robot(p, x, y, Orientation.NORTH);
-		robot.stepForward();
+		robot.simulate("F");
 		
 		assertEquals(x, robot.getRespawnX());
 		assertEquals(y, robot.getRespawnY());
 		
-		robot.stepForward();
+		robot.simulate("F");
 		
-		assertEquals(drap1Y, robot.getRespawnX());
-		assertEquals(drap2Y, robot.getRespawnY());
-	}*/
+		assertEquals(drapX, robot.getRespawnX());
+		assertEquals(drap1Y, robot.getRespawnY());
+	}
 	
 }
