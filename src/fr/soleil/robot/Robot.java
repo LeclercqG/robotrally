@@ -1,5 +1,7 @@
 package fr.soleil.robot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Robot extends OrientedThing {
@@ -7,8 +9,8 @@ public class Robot extends OrientedThing {
 	private int respawnY;
 	private int dernierDrapeau;
 	private int nbrRespawn;
-	private int vie;
-
+	private int pionsDegats;
+	
 	public Robot(Plateau p, int x, int y, Orientation initialOrientation) {
 		if (p.getCell(x, y).getRobot() == null && p.getCell(x, y).getTrou() == null) {
 			this.x = x;
@@ -19,7 +21,7 @@ public class Robot extends OrientedThing {
 			this.respawnX = x;
 			this.respawnY = y;
 			this.dernierDrapeau = 0;
-			this.vie = 5;
+			this.pionsDegats = 0;
 			this.nbrRespawn=3;
 		}
 	}
@@ -40,8 +42,8 @@ public class Robot extends OrientedThing {
 		return nbrRespawn;
 	}
 
-	public int getVie() {
-		return vie;
+	public int getPionsDegats() {
+		return pionsDegats;
 	}
 
 	public void turnRight() {
@@ -92,25 +94,30 @@ public class Robot extends OrientedThing {
 			} else {
 				moveDirection(ori);
 			}
-			triggerTrou();
+			triggerDestruction();
 		}
 	}
 	
-	private void triggerTrou() {
-		
-		if( getItCell().getTrou() != null ) {
+	private void respawn() {
+		if (nbrRespawn!=0) {
 			transferRobotToCell(respawnX,respawnY, ori);
-			this.vie-=2;
-			this.nbrRespawn-=1;
+			this.pionsDegats=2;
+			nbrRespawn--;
+		}
+	}
+	
+	private void triggerDestruction() {
+		if( getItCell().getTrou() != null ) {
+			respawn();
 		}
 	}
 	
 	private void triggerDrapeau() {
 		Drapeau d;
-		if((d = this.getItCell().getDrapeau()) != null && d.getRang() == this.dernierDrapeau+1) {
-			this.respawnX = d.getX();
-			this.respawnY= d.getY();
-			this.dernierDrapeau++;
+		if((d = getItCell().getDrapeau()) != null && d.getRang() == dernierDrapeau+1) {
+			respawnX = d.getX();
+			respawnY= d.getY();
+			dernierDrapeau++;
 		}
 	}
 

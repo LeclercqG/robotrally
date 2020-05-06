@@ -49,7 +49,7 @@ public class RobotTests {
 	@Test
 	void robotsAreCreatedWith5vieAnd3nbrRespawn() {
 		Robot robot = new Robot(p, 1, 1, Orientation.NORTH);
-		assertEquals(5, robot.getVie());
+		assertEquals(0, robot.getPionsDegats());
 		assertEquals(3, robot.getNbrRespawn());
 	}
 
@@ -417,7 +417,7 @@ public class RobotTests {
 		new Trou(p, x, y);
 		Robot robot=new Robot(p, 0, 1, Orientation.NORTH);
 		robot.stepForward();
-		assertEquals(3, robot.getVie());
+		assertEquals(2, robot.getPionsDegats());
 		assertEquals(2, robot.getNbrRespawn());
 	}
 
