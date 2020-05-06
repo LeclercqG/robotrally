@@ -9,6 +9,17 @@ public class Cell implements Icell {
 	private Robot robot;
 	private Trou trou;
 	private Drapeau drapeau;
+	private List<Robot> laserActive;
+	private boolean cellNotInGame;
+	
+	public Cell(boolean notInGame) {
+		cellNotInGame = notInGame;
+	}
+
+	public Cell() {
+		murs = new ArrayList<>();
+		laserActive = new ArrayList<>();
+	}
 
 	public Drapeau getDrapeau() {
 		return drapeau;
@@ -24,16 +35,6 @@ public class Cell implements Icell {
 
 	public void setTrou(Trou trou) {
 		this.trou = trou;
-	}
-
-	private boolean cellNotInGame;
-
-	public Cell(boolean notInGame) {
-		cellNotInGame = notInGame;
-	}
-
-	public Cell() {
-		murs = new ArrayList<>();
 	}
 
 	public List<Mur> getMurs() {
@@ -64,4 +65,11 @@ public class Cell implements Icell {
 	public void addMur(Mur mur) {
 		this.murs.add(mur);
 	}
+	public void deleteActiveLaser(Robot r) {
+		this.laserActive.remove(r);
+	}
+	public void addActiveLaser(Robot r) {
+		this.laserActive.add(r);
+	}
+	
 }

@@ -29,16 +29,28 @@ public class RobotTests {
 	@BeforeEach
 	void init() {
 		p = new Plateau(plateauX, plateauY);
+		Drapeau.resetNbDrapeau();
 	}
-
+	
 	@Test
-	void robotsAreCreatedWithAPositionAndOrientation() {
+	void robotsAreCreatedWithAPositionAndOrientationAndPlateauAndRespawnPointOnTheirPosition() {
 		Orientation initialOrientation = Orientation.NORTH;
-		Cell initialCell = p.getCell(1, 1);
-		Robot robot = new Robot(p, 1, 1, initialOrientation);
-
+		int x=1;
+		int y=1;
+		Cell initialCell = p.getCell(x, y);
+		Robot robot = new Robot(p, x, y, initialOrientation);
+		assertEquals(p, robot.getPlateau());
 		assertEquals(initialOrientation, robot.getOrientation());
 		assertEquals(initialCell, robot.getItCell());
+		assertEquals(robot.getRespawnX(), x);
+		assertEquals(robot.getRespawnY(), y);
+	}
+	
+	@Test
+	void robotsAreCreatedWith5vieAnd3nbrRespawn() {
+		Robot robot = new Robot(p, 1, 1, Orientation.NORTH);
+		assertEquals(5, robot.getVie());
+		assertEquals(3, robot.getNbrRespawn());
 	}
 
 	@Test
@@ -386,13 +398,35 @@ public class RobotTests {
 		assertSame(null, p.getCell(x, y).getRobot());
 		assertSame(false, p.getCell(x, y).hasMurOn(oriWall));
 	}
+	
+	@Test
+	void fallInTrouSendYouToRespawnPoint() {
+		int x = 0;
+		int y = 0;
+		new Trou(p, x, y);
+		Robot robot=new Robot(p, 0, 1, Orientation.NORTH);
+		robot.stepForward();
+		assertEquals(robot.getRespawnX(), robot.getX());
+		assertEquals(robot.getRespawnY(), robot.getY());
+	}
+	
+	@Test
+	void fallInTrouInflictRobotVieLossAndNbrRespawnLoss() {
+		int x = 0;
+		int y = 0;
+		new Trou(p, x, y);
+		Robot robot=new Robot(p, 0, 1, Orientation.NORTH);
+		robot.stepForward();
+		assertEquals(3, robot.getVie());
+		assertEquals(2, robot.getNbrRespawn());
+	}
 
-	/*@Test
+	@Test
 	void drapeauAreThings() {
 		Thing thing = new Drapeau(p, 10, 10);
 		
 		assertSame(thing, p.getCell(10, 10).getDrapeau());
-	}*/
+	}
 	
 	@Test
 	void drapeauHaveRank() {
@@ -402,4 +436,27 @@ public class RobotTests {
 		assertEquals(1, drapeau1.getRang());
 		assertEquals(2, drapeau2.getRang());
 	}
+	
+	/*@Test
+	void robotsSteppingOnNextDrapeauUpdateRespwan() {
+		int x=11;
+		int y=11;
+		int drapX=10;
+		int drap1Y=9;
+		int drap2Y=10;
+		new Drapeau(p, drapX, drap1Y);
+		new Drapeau(p, drapX, drap2Y);
+
+		Robot robot=new Robot(p, x, y, Orientation.NORTH);
+		robot.stepForward();
+		
+		assertEquals(x, robot.getRespawnX());
+		assertEquals(y, robot.getRespawnY());
+		
+		robot.stepForward();
+		
+		assertEquals(drap1Y, robot.getRespawnX());
+		assertEquals(drap2Y, robot.getRespawnY());
+	}*/
+	
 }

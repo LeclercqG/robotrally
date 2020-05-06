@@ -5,6 +5,10 @@ public abstract class Thing {
 	protected int y;
 	protected Plateau plateau;
 
+	public Plateau getPlateau() {
+		return plateau;
+	}
+
 	public int getX() {
 		return x;
 	}
