@@ -11,6 +11,7 @@ public class Cell implements Icell {
 	private Drapeau drapeau;
 	private List<Robot> laserActive;
 	private boolean cellNotInGame;
+	private Clef clef;
 	
 	public Cell(boolean notInGame) {
 		cellNotInGame = notInGame;
@@ -23,6 +24,14 @@ public class Cell implements Icell {
 	
 	public boolean cellNotInGame() {
 		return cellNotInGame;
+	}
+	
+	public Clef getClef() {
+		return clef;
+	}
+
+	public void setClef(Clef clef) {
+		this.clef = clef;
 	}
 
 	public Drapeau getDrapeau() {

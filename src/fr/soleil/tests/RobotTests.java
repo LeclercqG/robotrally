@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.soleil.robot.Cell;
+import fr.soleil.robot.Clef;
 import fr.soleil.robot.Drapeau;
 import fr.soleil.robot.Mur;
 import fr.soleil.robot.Orientation;
@@ -299,6 +300,16 @@ public class RobotTests {
 		list.add(thing);
 		assertEquals(list, p.getCell(10, 10).getMurs());
 	}
+	
+	@Test
+	void cannotBuild4WallOn1Cell() {
+		new Mur(p, 10, 10, Orientation.NORTH);
+		new Mur(p, 10, 10, Orientation.EAST);
+		new Mur(p, 10, 10, Orientation.WEST);
+		new Mur(p, 10, 10, Orientation.SOUTH);
+		assertEquals(3, p.getCell(10, 10).getMurs().size());
+		assertEquals(false, p.getCell(10, 10).hasMurOn(Orientation.SOUTH));
+	}
 
 	@Test
 	void mursAreCreatedInTheirNeighborWithOppositeOrientation() {
@@ -459,4 +470,46 @@ public class RobotTests {
 		assertEquals(drap1Y, robot.getRespawnY());
 	}
 	
+	@Test
+	void robotsHorsTensionCannotSimulate() {
+		int x=10;
+		int y=11;
+		Robot robot=new Robot(p, x, y, Orientation.NORTH);
+		robot.miseHorsTension();
+		
+		robot.simulate("F");
+		assertEquals(x, robot.getX());
+		assertEquals(y, robot.getY());
+		
+		robot.miseSousTension();
+		robot.simulate("F");
+		assertEquals(x, robot.getX());
+		assertEquals(y-1, robot.getY());
+	}
+	
+	@Test
+	void robotsHorsTensionResetPionsDegats() {
+		int x = 0;
+		int y = 0;
+		new Trou(p, x, y);
+		Robot robot=new Robot(p, 0, 1, Orientation.NORTH);
+		robot.simulate("F");
+		assertEquals(2, robot.getPionsDegats());
+		
+		robot.miseHorsTension();
+		assertEquals(0, robot.getPionsDegats());
+		
+		robot.stepForward();
+		assertEquals(2, robot.getPionsDegats());
+		
+		robot.miseSousTension();
+		assertEquals(2, robot.getPionsDegats());
+	}
+	
+	@Test
+	void clefAreThings() {
+		Thing thing = new Clef(p, 10, 10);
+
+		assertSame(thing, p.getCell(10, 10).getClef());
+	}
 }

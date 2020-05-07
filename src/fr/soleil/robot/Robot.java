@@ -154,9 +154,9 @@ public class Robot extends OrientedThing {
 				default:
 					break;
 				}
-				triggerDrapeau();
 			}
 		}
+		triggerDrapeau();
 	}
 
 	private boolean shiftRobot(Robot r, Orientation o) {

@@ -3,7 +3,7 @@ package fr.soleil.robot;
 public class Mur extends OrientedThing {
 
 	public Mur(Plateau p, int x, int y, Orientation ori) {
-		if (!p.getCell(x, y).hasMurOn(ori) && p.getCell(x, y).getTrou() == null) {
+		if (!p.getCell(x, y).hasMurOn(ori) && p.getCell(x, y).getTrou() == null && p.getCell(x, y).getMurs().size()<3) {
 			this.x = x;
 			this.y = y;
 			this.plateau = p;
