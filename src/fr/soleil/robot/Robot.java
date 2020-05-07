@@ -1,7 +1,5 @@
 package fr.soleil.robot;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Robot extends OrientedThing {
@@ -10,6 +8,7 @@ public class Robot extends OrientedThing {
 	private int dernierDrapeau;
 	private int nbrRespawn;
 	private int pionsDegats;
+	private boolean horsTension;
 	
 	public Robot(Plateau p, int x, int y, Orientation initialOrientation) {
 		if (p.getCell(x, y).getRobot() == null && p.getCell(x, y).getTrou() == null) {
@@ -23,9 +22,23 @@ public class Robot extends OrientedThing {
 			this.dernierDrapeau = 0;
 			this.pionsDegats = 0;
 			this.nbrRespawn=3;
+			this.horsTension=false;
 		}
 	}
 	
+	public boolean isHorsTension() {
+		return horsTension;
+	}
+
+	public void miseHorsTension() {
+		this.pionsDegats=0;
+		this.horsTension = true;
+	}
+	
+	public void miseSousTension() {
+		this.horsTension = false;
+	}
+
 	public int getRespawnX() {
 		return respawnX;
 	}
@@ -126,21 +139,23 @@ public class Robot extends OrientedThing {
 	}
 
 	public void simulate(String string) {
-		for (int i = 0; i < string.length(); i++) {
-			switch (string.charAt(i)) {
-			case 'R':
-				turnRight();
-				break;
-			case 'L':
-				turnLeft();
-				break;
-			case 'F':
-				stepForward();
-				break;
-			default:
-				break;
+		if(!this.isHorsTension()) {
+			for (int i = 0; i < string.length(); i++) {
+				switch (string.charAt(i)) {
+				case 'R':
+					turnRight();
+					break;
+				case 'L':
+					turnLeft();
+					break;
+				case 'F':
+					stepForward();
+					break;
+				default:
+					break;
+				}
+				triggerDrapeau();
 			}
-			triggerDrapeau();
 		}
 	}
 
