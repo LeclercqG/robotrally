@@ -9,7 +9,7 @@ public class Robot extends OrientedThing {
 	private int nbrRespawn;
 	private int pionsDegats;
 	private boolean horsTension;
-	
+
 	public Robot(Plateau p, int x, int y, Orientation initialOrientation) {
 		if (p.getCell(x, y).getRobot() == null && p.getCell(x, y).getTrou() == null) {
 			this.x = x;
@@ -25,7 +25,7 @@ public class Robot extends OrientedThing {
 			this.horsTension=false;
 		}
 	}
-	
+
 	public boolean isHorsTension() {
 		return horsTension;
 	}
@@ -34,7 +34,7 @@ public class Robot extends OrientedThing {
 		this.pionsDegats=0;
 		this.horsTension = true;
 	}
-	
+
 	public void miseSousTension() {
 		this.horsTension = false;
 	}
@@ -67,7 +67,7 @@ public class Robot extends OrientedThing {
 		this.ori = this.ori.previous();
 	}
 
-	public void transferRobotToCell(int x, int y, Orientation ori) {
+	private void transferRobotToCell(int x, int y, Orientation ori) {
 		this.getItCell().setRobot(null);
 		this.x = x;
 		this.y = y;
@@ -75,28 +75,28 @@ public class Robot extends OrientedThing {
 		this.ori=ori;
 	}
 
-	public void moveDirection(Orientation o) {
+	private void moveDirection(Orientation o) {
 		if (!this.getNextCell(o).cellNotInGame()) {
 			switch (o) {
-				case NORTH:
-					transferRobotToCell(this.x, this.y - 1, o);
-					break;
-				case SOUTH:
-					transferRobotToCell(this.x, this.y + 1, o);
-					break;
-				case WEST:
-					transferRobotToCell(this.x - 1, this.y, o);
-					break;
-				case EAST:
-					transferRobotToCell(this.x + 1, this.y, o);
-					break;
+			case NORTH:
+				transferRobotToCell(this.x, this.y - 1, o);
+				break;
+			case SOUTH:
+				transferRobotToCell(this.x, this.y + 1, o);
+				break;
+			case WEST:
+				transferRobotToCell(this.x - 1, this.y, o);
+				break;
+			case EAST:
+				transferRobotToCell(this.x + 1, this.y, o);
+				break;
 			}
 		}else {
 			respawn();
 		}
 	}
 
-	public boolean canMove(Orientation o) { // verifie si le robot peut bouger
+	private boolean canMove(Orientation o) { // verifie si le robot peut bouger
 		Cell cell = this.getItCell();
 		if (cell.getMurs().isEmpty()) {
 			return true;
@@ -114,7 +114,7 @@ public class Robot extends OrientedThing {
 			triggerTrou();
 		}
 	}
-	
+
 	private void respawn() {
 		if (nbrRespawn!=0) {
 			transferRobotToCell(respawnX,respawnY, ori);
@@ -122,19 +122,25 @@ public class Robot extends OrientedThing {
 			nbrRespawn--;
 		}
 	}
-	
+
 	private void triggerTrou() {
 		if( getItCell().getTrou() != null) {
 			respawn();
 		}
 	}
-	
+
 	private void triggerDrapeau() {
 		Drapeau d;
 		if((d = getItCell().getDrapeau()) != null && d.getRang() == dernierDrapeau+1) {
 			respawnX = d.getX();
 			respawnY= d.getY();
 			dernierDrapeau++;
+		}
+	}
+
+	private void triggerClef() {
+		if((getItCell().getClef()) != null && this.pionsDegats>0) {
+			this.pionsDegats--;
 		}
 	}
 
@@ -156,7 +162,18 @@ public class Robot extends OrientedThing {
 				}
 			}
 		}
+		//TODO Deplacer a la fin du mouvement de tout les robots
 		triggerDrapeau();
+		triggerClef();
+		triggerLaser();
+		triggerTapisRoulant();
+	}
+
+	private void triggerTapisRoulant() {
+		Treadmill tapisRoulant= getItCell().getTapisRoulant();
+		if((tapisRoulant) != null && getItCell().getTapisRoulant().isAngle() ) {
+			moveDirection(tapisRoulant.ori);
+		}
 	}
 
 	private boolean shiftRobot(Robot r, Orientation o) {
@@ -175,16 +192,17 @@ public class Robot extends OrientedThing {
 		r.moveDirection(o);
 		return true;
 	}
-	
-	/*private List<Cell> getCellulesDevant() {
-		List<Cell> c = new ArrayList<>();
+
+	private Robot getRobotEnVue() {
+		Robot r = null;
 		switch(ori) {
 		case NORTH:
 			for(int i=y;i>=0;i--) {
 				if(plateau.getCell(x, i).hasMurOn(ori)) {
 					break;
-				}else {
-					c.add(plateau.getCell(x, i));
+				}else if(plateau.getCell(x, i).getRobot() != null) {
+					r = plateau.getCell(x, i).getRobot();
+					break;
 				}
 			}
 			break;
@@ -192,8 +210,9 @@ public class Robot extends OrientedThing {
 			for(int i=y;i<plateau.getColumn(x).size();i++) {
 				if(plateau.getCell(x, i).hasMurOn(ori)) {
 					break;
-				}else {
-					c.add(plateau.getCell(x, i));
+				}else if(plateau.getCell(x, i).getRobot() != null) {
+					r = plateau.getCell(x, i).getRobot();
+					break;
 				}
 			}
 			break;
@@ -201,8 +220,9 @@ public class Robot extends OrientedThing {
 			for(int i=x;i<plateau.getLine(y).size();i++) {
 				if(plateau.getCell(i, y).hasMurOn(ori)) {
 					break;
-				}else {
-					c.add(plateau.getCell(i, y));
+				}else if(plateau.getCell(i, y).getRobot() != null) {
+					r = plateau.getCell(i, y).getRobot();
+					break;
 				}
 			}
 			break;
@@ -210,27 +230,32 @@ public class Robot extends OrientedThing {
 			for(int i=y;i>=0;i--) {
 				if(plateau.getCell(i, y).hasMurOn(ori)) {
 					break;
-				}else {
-					c.add(plateau.getCell(i, y));
+				}else if(plateau.getCell(i, y).getRobot() != null) {
+					r = plateau.getCell(i, y).getRobot();
+					break;
 				}
 			}
 			break;
 		}
-		return c;
+		return r;
 	}
-	
-	private void triggerLaser() {
-		List<Cell> cells = getCellulesDevant();
-		for(Cell c:cells) {
-			Robot r;
-			if((r=c.getRobot()) != null) {
-				
-			}
-			
-		}
-	}*/
-	
-	
 
+	private void triggerLaser() {
+		Robot victime = getRobotEnVue();
+		if(victime != null) {
+			if(victime.pionsDegats<10) {
+				victime.pionsDegats++;
+				System.out.println("PIOU PIOU");
+			}
+			else {
+				victime.respawn();
+			}
+		}
+
+	}
 }
+
+
+
+
 

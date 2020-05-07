@@ -32,7 +32,6 @@ public class OrientedThing extends Thing {
 				cell = plateau.getCell(x + 1, y);
 				break;
 		}
-
 		return cell;
 	}
 

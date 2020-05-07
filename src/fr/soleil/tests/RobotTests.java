@@ -20,6 +20,7 @@ import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Plateau;
 import fr.soleil.robot.Robot;
 import fr.soleil.robot.Thing;
+import fr.soleil.robot.Treadmill;
 import fr.soleil.robot.Trou;
 
 public class RobotTests {
@@ -508,8 +509,47 @@ public class RobotTests {
 	
 	@Test
 	void clefAreThings() {
-		Thing thing = new Clef(p, 10, 10);
+		int x = 10;
+		int y = 10;
+		Thing thing = new Clef(p, x, y);
 
-		assertSame(thing, p.getCell(10, 10).getClef());
+		assertSame(thing, p.getCell(x, y).getClef());
 	}
+	
+	@Test
+	void robotOnClefHeal1() {
+		int x = 10;
+		int y = 10;
+		new Trou(p, x+1, y+1);
+		new Clef(p, x, y);
+		Robot robot=new Robot(p, x, y+1, Orientation.NORTH);
+		robot.simulate("RF");
+		
+		robot.simulate("F");
+
+		assertEquals(1, robot.getPionsDegats());
+	}
+	
+	@Test
+	void robotGetHurtByLaser() {
+		Robot r1 = new Robot(p, 10, 10, Orientation.WEST);
+		Robot r2 = new Robot(p, 10, 8, Orientation.NORTH);
+		
+		assertEquals(0, r2.getPionsDegats());
+		r1.simulate("R");
+		assertEquals(1, r2.getPionsDegats());
+		
+	}
+	
+	@Test
+	void treadmillAreThings() {
+		int x = 10;
+		int y = 10;
+		
+		Thing thing = new Treadmill(p, x, y, Orientation.NORTH, false);
+		
+		assertSame(thing, p.getCell(x, y).getTapisRoulant());
+	}
+	
+	
 }
