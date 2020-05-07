@@ -12,7 +12,7 @@ public class Cell implements Icell {
 	private List<Robot> laserActive;
 	private boolean cellNotInGame;
 	private Clef clef;
-	private Treadmill tapisRoulant;
+	private TapisRoulant tapisRoulant;
 	
 	public Cell(boolean notInGame) {
 		cellNotInGame = notInGame;
@@ -23,11 +23,11 @@ public class Cell implements Icell {
 		laserActive = new ArrayList<>();
 	}
 	 
-	public Treadmill getTapisRoulant() {
+	public TapisRoulant getTapisRoulant() {
 		return tapisRoulant;
 	}
 
-	public void setTapisRoulant(Treadmill tapisRoulant) {
+	public void setTapisRoulant(TapisRoulant tapisRoulant) {
 		this.tapisRoulant = tapisRoulant;
 	}
 

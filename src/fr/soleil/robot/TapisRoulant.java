@@ -1,10 +1,10 @@
 package fr.soleil.robot;
 
-public class Treadmill extends OrientedThing {
+public class TapisRoulant extends OrientedThing {
 	
 	private boolean isAngle;
 	
-	public Treadmill ( Plateau plateau, int x , int y, Orientation ori, boolean isAngle) {
+	public TapisRoulant ( Plateau plateau, int x , int y, Orientation ori, boolean isAngle) {
 		Cell cell=plateau.getCell(x,y);
 		if (cell.getDrapeau() == null && cell.getTapisRoulant()== null && cell.getTrou()== null) {
 			this.x = x ;

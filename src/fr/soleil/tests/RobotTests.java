@@ -19,8 +19,8 @@ import fr.soleil.robot.Mur;
 import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Plateau;
 import fr.soleil.robot.Robot;
+import fr.soleil.robot.TapisRoulant;
 import fr.soleil.robot.Thing;
-import fr.soleil.robot.Treadmill;
 import fr.soleil.robot.Trou;
 
 public class RobotTests {
@@ -525,7 +525,7 @@ public class RobotTests {
 		Robot robot=new Robot(p, x, y+1, Orientation.NORTH);
 		robot.simulate("RF");
 		
-		robot.simulate("F");
+		robot.simulate("LF");
 
 		assertEquals(1, robot.getPionsDegats());
 	}
@@ -546,7 +546,7 @@ public class RobotTests {
 		int x = 10;
 		int y = 10;
 		
-		Thing thing = new Treadmill(p, x, y, Orientation.NORTH, false);
+		Thing thing = new TapisRoulant(p, x, y, Orientation.NORTH, false);
 		
 		assertSame(thing, p.getCell(x, y).getTapisRoulant());
 	}

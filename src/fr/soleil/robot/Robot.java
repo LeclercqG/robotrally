@@ -165,15 +165,22 @@ public class Robot extends OrientedThing {
 		//TODO Deplacer a la fin du mouvement de tout les robots
 		triggerDrapeau();
 		triggerClef();
-		triggerLaser();
+		//triggerLaser();
 		triggerTapisRoulant();
 	}
 
 	private void triggerTapisRoulant() {
-		Treadmill tapisRoulant= getItCell().getTapisRoulant();
-		if((tapisRoulant) != null && getItCell().getTapisRoulant().isAngle() ) {
+		TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
+		
+		if((tapisRoulant) != null) {
 			moveDirection(tapisRoulant.ori);
+			
+			tapisRoulant= getItCell().getTapisRoulant();
+			if(tapisRoulant.isAngle()) {
+				this.ori= tapisRoulant.getOrientation();
+			}
 		}
+
 	}
 
 	private boolean shiftRobot(Robot r, Orientation o) {
