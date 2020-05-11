@@ -76,7 +76,7 @@ public class Robot extends OrientedThing {
 	}
 
 	private void moveDirection(Orientation o) {
-		if (!this.getNextCell(o).cellIsNotInGame()) {
+		if (!this.getNextCell(o, 1).cellIsNotInGame()) {
 			switch (o) {
 			case NORTH:
 				transferRobotToCell(this.x, this.y - 1, o);
@@ -106,7 +106,7 @@ public class Robot extends OrientedThing {
 
 	public void stepForward() {
 		if (canMove(this.ori)) {
-			if (!Objects.isNull(getNextCell(ori).getRobot())) {
+			if (!Objects.isNull(getNextCell(ori, 1).getRobot())) {
 				shiftRobot(this, ori);
 			} else {
 				moveDirection(ori);
@@ -162,29 +162,34 @@ public class Robot extends OrientedThing {
 				}
 			}
 		}
-		//TODO Deplacer a la fin du mouvement de tout les robots
 		triggerDrapeau();
 		triggerClef();
-		//triggerLaser();
+		triggerLaser();
 		triggerTapisRoulant();
 	}
 
 	private void triggerTapisRoulant() {
-		TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
-		
-		if((tapisRoulant) != null) {
-			moveDirection(tapisRoulant.ori);
-			
-			tapisRoulant= getItCell().getTapisRoulant();
-			if(tapisRoulant.isAngle()) {
-				this.ori= tapisRoulant.getOrientation();
+		if(getNextCell(this.ori,1).getRobot() !=null && getNextCell(this.ori,2).getRobot() !=null) {
+			TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
+	
+			if((tapisRoulant) != null) {
+				moveDirection(tapisRoulant.ori);
+	
+				tapisRoulant= getItCell().getTapisRoulant();
+				if(tapisRoulant.isAngle()) {
+					this.ori= tapisRoulant.getOrientation();
+				}
+				
+				if  (tapisRoulant instanceof TapisRoulantExpress) {
+					triggerTapisRoulant();
+				}
 			}
 		}
 
 	}
 
 	private boolean shiftRobot(Robot r, Orientation o) {
-		Robot robotDevant = r.getNextCell(o).getRobot();
+		Robot robotDevant = r.getNextCell(o, 1).getRobot();
 		if (robotDevant != null) {
 			if (shiftRobot(robotDevant, o)) { // On avance
 				r.moveDirection(o);
@@ -202,45 +207,34 @@ public class Robot extends OrientedThing {
 
 	private Robot getRobotEnVue() {
 		Robot r = null;
+		int i;
 		switch(ori) {
 		case NORTH:
-			for(int i=y;i>=0;i--) {
-				if(plateau.getCell(x, i).hasMurOn(ori)) {
-					break;
-				}else if(plateau.getCell(x, i).getRobot() != null) {
-					r = plateau.getCell(x, i).getRobot();
-					break;
-				}
+			i = y-1;
+			while(i>=0 && r == null && !plateau.getCell(x, i).hasMurOn(ori) ) {
+				r = plateau.getCell(x, i).getRobot();
+				i--;
 			}
 			break;
 		case SOUTH:
-			for(int i=y;i<plateau.getColumn(x).size();i++) {
-				if(plateau.getCell(x, i).hasMurOn(ori)) {
-					break;
-				}else if(plateau.getCell(x, i).getRobot() != null) {
-					r = plateau.getCell(x, i).getRobot();
-					break;
-				}
+			i = y+1;
+			while(i<plateau.getColumn(x).size() && r == null && !plateau.getCell(x, i).hasMurOn(ori) ) {
+				r = plateau.getCell(x, i).getRobot();
+				i++;
 			}
 			break;
 		case EAST:
-			for(int i=x;i<plateau.getLine(y).size();i++) {
-				if(plateau.getCell(i, y).hasMurOn(ori)) {
-					break;
-				}else if(plateau.getCell(i, y).getRobot() != null) {
-					r = plateau.getCell(i, y).getRobot();
-					break;
-				}
+			i = x+1;
+			while(i<plateau.getLine(y).size() && r == null && !plateau.getCell(x, i).hasMurOn(ori) ) {
+				r = plateau.getCell(i, y).getRobot();
+				i++;
 			}
 			break;
 		case WEST:
-			for(int i=y;i>=0;i--) {
-				if(plateau.getCell(i, y).hasMurOn(ori)) {
-					break;
-				}else if(plateau.getCell(i, y).getRobot() != null) {
-					r = plateau.getCell(i, y).getRobot();
-					break;
-				}
+			i = x-1;
+			while(i>=0 && r == null && !plateau.getCell(x, i).hasMurOn(ori) ) {
+				r = plateau.getCell(i, y).getRobot();
+				i--;
 			}
 			break;
 		}
@@ -252,7 +246,6 @@ public class Robot extends OrientedThing {
 		if(victime != null) {
 			if(victime.pionsDegats<10) {
 				victime.pionsDegats++;
-				System.out.println("PIOU PIOU");
 			}
 			else {
 				victime.respawn();

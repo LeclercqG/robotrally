@@ -20,6 +20,7 @@ import fr.soleil.robot.Orientation;
 import fr.soleil.robot.Plateau;
 import fr.soleil.robot.Robot;
 import fr.soleil.robot.TapisRoulant;
+import fr.soleil.robot.TapisRoulantExpress;
 import fr.soleil.robot.Thing;
 import fr.soleil.robot.Trou;
 
@@ -288,8 +289,8 @@ public class RobotTests {
 		Robot r2d2 = new Robot(p, 20, 20, oriR2d2);
 		Robot c3po = new Robot(p, 2, 0, oriC3po);
 		new Mur(p, 20, 19, Orientation.SOUTH);
-		List<Mur> sensedByR2D2 = r2d2.getNextCell(oriR2d2).getMurs();
-		List<Mur> sensedByC3PO = c3po.getNextCell(oriC3po).getMurs();
+		List<Mur> sensedByR2D2 = r2d2.getNextCell(oriR2d2, 1).getMurs();
+		List<Mur> sensedByC3PO = c3po.getNextCell(oriC3po, 1).getMurs();
 		assertFalse(sensedByR2D2.isEmpty());
 		assertTrue(sensedByC3PO.isEmpty());
 	}
@@ -318,9 +319,9 @@ public class RobotTests {
 		int murY = 10;
 		Orientation oriMur = Orientation.NORTH;
 		Mur mur = new Mur(p, murX, murY, oriMur);
-		assertSame(true, mur.getNextCell(oriMur).hasMurOn(Orientation.SOUTH));
-		assertSame(murX, mur.getNextCell(oriMur).getMurs().get(0).getX());
-		assertSame(murY - 1, mur.getNextCell(oriMur).getMurs().get(0).getY());
+		assertSame(true, mur.getNextCell(oriMur, 1).hasMurOn(Orientation.SOUTH));
+		assertSame(murX, mur.getNextCell(oriMur, 1).getMurs().get(0).getX());
+		assertSame(murY - 1, mur.getNextCell(oriMur, 1).getMurs().get(0).getY());
 	}
 
 	@Test
@@ -381,7 +382,7 @@ public class RobotTests {
 		Mur wall = new Mur(p, wallX, wallY, Orientation.EAST);
 
 		r2d2.stepForward();
-		assertTrue(wall.getNextCell(Orientation.EAST).hasMurOn(Orientation.WEST));
+		assertTrue(wall.getNextCell(Orientation.EAST, 1).hasMurOn(Orientation.WEST));
 
 		assertEquals(r2d2X, r2d2.getX());
 		assertEquals(r2d2Y, r2d2.getY());
@@ -542,13 +543,43 @@ public class RobotTests {
 	}
 	
 	@Test
-	void treadmillAreThings() {
+	void murBlockLaser() {
+		Robot r1 = new Robot(p, 10, 10, Orientation.WEST);
+		Robot r2 = new Robot(p, 10, 8, Orientation.NORTH);
+		new Mur(p, 10,9,Orientation.NORTH);
+		assertEquals(0, r2.getPionsDegats());
+		r1.simulate("R");
+		assertEquals(0, r2.getPionsDegats());
+	}
+	
+	@Test
+	void tapisRoulantAreThings() {
 		int x = 10;
 		int y = 10;
 		
-		Thing thing = new TapisRoulant(p, x, y, Orientation.NORTH, false);
+		Thing thing = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
 		
 		assertSame(thing, p.getCell(x, y).getTapisRoulant());
+	}
+	
+	/*@Test
+	void tapisRoulantMoveRobotAfterSimulate() {
+		int x = 10;
+		int y = 10;
+		Robot r1 = new Robot(p, 10, 10, Orientation.WEST);
+		TapisRoulant tapisRoulant = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		
+		assertSame(thing, p.getCell(x, y).getTapisRoulant());
+	}*/
+	
+	@Test
+	void tapisRoulantExpressAreTapisRoulant() {
+		int x = 10;
+		int y = 10;
+		
+		TapisRoulant tapisRoulant = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		
+		assertSame(tapisRoulant, p.getCell(x, y).getTapisRoulant());
 	}
 	
 	
