@@ -31,7 +31,7 @@ public class Cell implements Icell {
 		this.tapisRoulant = tapisRoulant;
 	}
 
-	public boolean cellNotInGame() {
+	public boolean cellIsNotInGame() {
 		return cellNotInGame;
 	}
 	

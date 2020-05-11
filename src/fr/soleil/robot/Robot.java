@@ -76,7 +76,7 @@ public class Robot extends OrientedThing {
 	}
 
 	private void moveDirection(Orientation o) {
-		if (!this.getNextCell(o).cellNotInGame()) {
+		if (!this.getNextCell(o).cellIsNotInGame()) {
 			switch (o) {
 			case NORTH:
 				transferRobotToCell(this.x, this.y - 1, o);
