@@ -11,18 +11,18 @@ public class Mur extends OrientedThing {
 			this.getItCell().addMur(this);
 			if(!this.getNextCell(ori.next().next(), 1).cellIsNotInGame()) {
 				switch (this.ori) {
-					case NORTH:
-						new Mur(p, x, y - 1, ori.next().next());
-						break;
-					case SOUTH:
-						new Mur(p, x, y + 1, ori.next().next());
-						break;
-					case WEST:
-						new Mur(p, x - 1, y, ori.next().next());
-						break;
-					case EAST:
-						new Mur(p, x + 1, y, ori.next().next());
-						break;
+				case NORTH:
+					new Mur(p, x, y - 1, ori.next().next());
+					break;
+				case SOUTH:
+					new Mur(p, x, y + 1, ori.next().next());
+					break;
+				case WEST:
+					new Mur(p, x - 1, y, ori.next().next());
+					break;
+				case EAST:
+					new Mur(p, x + 1, y, ori.next().next());
+					break;
 				}
 			}
 		}

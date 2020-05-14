@@ -21,7 +21,7 @@ public class Robot extends OrientedThing {
 			this.respawnY = y;
 			this.dernierDrapeau = 0;
 			this.pionsDegats = 0;
-			this.nbrRespawn=3;
+			this.nbrRespawn= 3;
 			this.horsTension=false;
 		}
 	}
@@ -169,23 +169,23 @@ public class Robot extends OrientedThing {
 	}
 
 	private void triggerTapisRoulant() {
-		if(getNextCell(this.ori,1).getRobot() !=null && getNextCell(this.ori,2).getRobot() !=null) {
-			TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
-	
-			if((tapisRoulant) != null) {
-				moveDirection(tapisRoulant.ori);
-	
-				tapisRoulant= getItCell().getTapisRoulant();
-				if(tapisRoulant.isAngle()) {
-					this.ori= tapisRoulant.getOrientation();
-				}
-				
-				if  (tapisRoulant instanceof TapisRoulantExpress) {
-					triggerTapisRoulant();
+		TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
+		if(tapisRoulant!=null) {
+			Orientation oriTapis= tapisRoulant.getOrientation();
+			if(getNextCell(oriTapis,1).getRobot() ==null) {	
+				Cell in2cell = getNextCell(this.ori,2);
+				if(in2cell.getRobot() == null || (in2cell.getTapisRoulant().getOrientation()!= oriTapis)) {
+					moveDirection(tapisRoulant.ori);
+					if(tapisRoulant.isAngle()) {
+							this.ori= tapisRoulant.getOrientation();
+					}
+					
+					if  (tapisRoulant instanceof TapisRoulantExpress) {
+						triggerTapisRoulant();
+					}
 				}
 			}
 		}
-
 	}
 
 	private boolean shiftRobot(Robot r, Orientation o) {
@@ -218,7 +218,8 @@ public class Robot extends OrientedThing {
 			break;
 		case SOUTH:
 			i = y+1;
-			while(i<plateau.getColumn(x).size() && r == null && !plateau.getCell(x, i).hasMurOn(ori) ) {
+			int sizecolumn = plateau.getColumn(x).size();
+			while(i< sizecolumn && r == null && !plateau.getCell(x, i).hasMurOn(ori) ) {
 				r = plateau.getCell(x, i).getRobot();
 				i++;
 			}

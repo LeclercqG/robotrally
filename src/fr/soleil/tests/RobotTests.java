@@ -26,7 +26,7 @@ import fr.soleil.robot.Trou;
 
 public class RobotTests {
 	private static final int plateauX = 60;
-	private static final int plateauY = 60;
+	private static final int plateauY = 70;
 	private Plateau p;
 
 	@BeforeEach
@@ -34,7 +34,7 @@ public class RobotTests {
 		p = new Plateau(plateauX, plateauY);
 		Drapeau.resetNbDrapeau();
 	}
-	
+	/*
 	@Test
 	void robotsAreCreatedWithAPositionAndOrientationAndPlateauAndRespawnPointOnTheirPosition() {
 		Orientation initialOrientation = Orientation.NORTH;
@@ -562,24 +562,76 @@ public class RobotTests {
 		assertSame(thing, p.getCell(x, y).getTapisRoulant());
 	}
 	
-	/*@Test
+	@Test
 	void tapisRoulantMoveRobotAfterSimulate() {
 		int x = 10;
 		int y = 10;
-		Robot r1 = new Robot(p, 10, 10, Orientation.WEST);
-		TapisRoulant tapisRoulant = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		Robot r1 = new Robot(p, 11, 10, Orientation.WEST);
+		new TapisRoulant(p, x, y, Orientation.NORTH, false);
 		
-		assertSame(thing, p.getCell(x, y).getTapisRoulant());
-	}*/
+		r1.simulate("F");
+		
+		assertEquals(x, r1.getX());
+		assertEquals(y-1, r1.getY());
+	}
+	
+	@Test
+	void tapisRoulantDontMoveRobotIfThereIsARobotInFront() {
+		int x = 10;
+		int y = 10;
+		Robot r1 = new Robot(p, x+1, y, Orientation.WEST);
+		new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		new Robot(p, x, y-1, Orientation.WEST);
+		
+		r1.simulate("F");
+		
+		assertEquals(x, r1.getX());
+		assertEquals(y, r1.getY());
+	}
 	
 	@Test
 	void tapisRoulantExpressAreTapisRoulant() {
 		int x = 10;
 		int y = 10;
 		
-		TapisRoulant tapisRoulant = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		TapisRoulantExpress express = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
 		
-		assertSame(tapisRoulant, p.getCell(x, y).getTapisRoulant());
+		assertSame(express, p.getCell(x, y).getTapisRoulant());
+	}*/
+	
+	@Test
+	void tapisRoulantMoveRobotTwice() {
+		int x = 10;
+		int y = 10;
+		Robot r1 = new Robot(p, 11, 10, Orientation.WEST);
+		new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		
+		r1.simulate("F");
+		
+		assertEquals(x, r1.getX());
+		assertEquals(y-2, r1.getY());
+	}
+	
+	@Test
+	void getLineGetALine() {	
+		assertEquals(plateauX, p.getLine(0).size());
+	}
+	
+	@Test
+	void getColumnGetAColumn() {	
+		assertEquals(plateauY, p.getColumn(0).size());
+	}
+	
+	@Test
+	void cannotCreate4MursOnOneCell() {
+		int x =10;
+		int y =10;
+		new Mur(p, x, y, Orientation.EAST);
+		new Mur(p, x, y, Orientation.WEST);
+		new Mur(p, x, y, Orientation.NORTH);
+		new Mur(p, x, y, Orientation.SOUTH);
+		
+		assertEquals(false, p.getCell(10, 10).hasMurOn(Orientation.SOUTH));
 	}
 	
 	
