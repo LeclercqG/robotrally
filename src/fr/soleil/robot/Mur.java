@@ -9,7 +9,7 @@ public class Mur extends OrientedThing {
 			this.plateau = p;
 			this.ori = ori;
 			this.getItCell().addMur(this);
-			if(!this.getNextCell(ori.next().next(), 1).cellIsNotInGame()) {
+			if(!this.getNextCell(ori.next().next(), 1, 0).cellIsNotInGame()) {
 				switch (this.ori) {
 				case NORTH:
 					new Mur(p, x, y - 1, ori.next().next());

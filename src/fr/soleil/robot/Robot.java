@@ -76,7 +76,7 @@ public class Robot extends OrientedThing {
 	}
 
 	private void moveDirection(Orientation o) {
-		if (!this.getNextCell(o, 1).cellIsNotInGame()) {
+		if (!this.getNextCell(o, 1, 0).cellIsNotInGame()) {
 			switch (o) {
 			case NORTH:
 				transferRobotToCell(this.x, this.y - 1, o);
@@ -106,7 +106,7 @@ public class Robot extends OrientedThing {
 
 	public void stepForward() {
 		if (canMove(this.ori)) {
-			if (!Objects.isNull(getNextCell(ori, 1).getRobot())) {
+			if (!Objects.isNull(getNextCell(ori, 1, 0).getRobot())) {
 				shiftRobot(this, ori);
 			} else {
 				moveDirection(ori);
@@ -172,8 +172,8 @@ public class Robot extends OrientedThing {
 		TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
 		if(tapisRoulant!=null) {
 			Orientation oriTapis= tapisRoulant.getOrientation();
-			if(getNextCell(oriTapis,1).getRobot() ==null) {	
-				Cell in2cell = getNextCell(this.ori,2);
+			if(getNextCell(oriTapis,1, 0).getRobot() ==null) {	
+				Cell in2cell = getNextCell(this.ori,2, 0);
 				if(in2cell.getRobot() == null || (in2cell.getTapisRoulant().getOrientation()!= oriTapis)) {
 					moveDirection(tapisRoulant.ori);
 					if(tapisRoulant.isAngle()) {
@@ -189,7 +189,7 @@ public class Robot extends OrientedThing {
 	}
 
 	private boolean shiftRobot(Robot r, Orientation o) {
-		Robot robotDevant = r.getNextCell(o, 1).getRobot();
+		Robot robotDevant = r.getNextCell(o, 1, 0).getRobot();
 		if (robotDevant != null) {
 			if (shiftRobot(robotDevant, o)) { // On avance
 				r.moveDirection(o);

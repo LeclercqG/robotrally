@@ -34,7 +34,7 @@ public class RobotTests {
 		p = new Plateau(plateauX, plateauY);
 		Drapeau.resetNbDrapeau();
 	}
-	/*
+	
 	@Test
 	void robotsAreCreatedWithAPositionAndOrientationAndPlateauAndRespawnPointOnTheirPosition() {
 		Orientation initialOrientation = Orientation.NORTH;
@@ -289,8 +289,8 @@ public class RobotTests {
 		Robot r2d2 = new Robot(p, 20, 20, oriR2d2);
 		Robot c3po = new Robot(p, 2, 0, oriC3po);
 		new Mur(p, 20, 19, Orientation.SOUTH);
-		List<Mur> sensedByR2D2 = r2d2.getNextCell(oriR2d2, 1).getMurs();
-		List<Mur> sensedByC3PO = c3po.getNextCell(oriC3po, 1).getMurs();
+		List<Mur> sensedByR2D2 = r2d2.getNextCell(oriR2d2, 1, 0).getMurs();
+		List<Mur> sensedByC3PO = c3po.getNextCell(oriC3po, 1, 0).getMurs();
 		assertFalse(sensedByR2D2.isEmpty());
 		assertTrue(sensedByC3PO.isEmpty());
 	}
@@ -319,9 +319,9 @@ public class RobotTests {
 		int murY = 10;
 		Orientation oriMur = Orientation.NORTH;
 		Mur mur = new Mur(p, murX, murY, oriMur);
-		assertSame(true, mur.getNextCell(oriMur, 1).hasMurOn(Orientation.SOUTH));
-		assertSame(murX, mur.getNextCell(oriMur, 1).getMurs().get(0).getX());
-		assertSame(murY - 1, mur.getNextCell(oriMur, 1).getMurs().get(0).getY());
+		assertSame(true, mur.getNextCell(oriMur, 1, 0).hasMurOn(Orientation.SOUTH));
+		assertSame(murX, mur.getNextCell(oriMur, 1, 0).getMurs().get(0).getX());
+		assertSame(murY - 1, mur.getNextCell(oriMur, 1, 0).getMurs().get(0).getY());
 	}
 
 	@Test
@@ -382,7 +382,7 @@ public class RobotTests {
 		Mur wall = new Mur(p, wallX, wallY, Orientation.EAST);
 
 		r2d2.stepForward();
-		assertTrue(wall.getNextCell(Orientation.EAST, 1).hasMurOn(Orientation.WEST));
+		assertTrue(wall.getNextCell(Orientation.EAST, 1, 0).hasMurOn(Orientation.WEST));
 
 		assertEquals(r2d2X, r2d2.getX());
 		assertEquals(r2d2Y, r2d2.getY());
@@ -597,9 +597,9 @@ public class RobotTests {
 		TapisRoulantExpress express = new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
 		
 		assertSame(express, p.getCell(x, y).getTapisRoulant());
-	}*/
+	}
 	
-	@Test
+	/*@Test
 	void tapisRoulantMoveRobotTwice() {
 		int x = 10;
 		int y = 10;
@@ -610,7 +610,7 @@ public class RobotTests {
 		
 		assertEquals(x, r1.getX());
 		assertEquals(y-2, r1.getY());
-	}
+	}*/
 	
 	@Test
 	void getLineGetALine() {	
