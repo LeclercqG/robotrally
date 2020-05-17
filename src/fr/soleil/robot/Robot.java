@@ -165,23 +165,28 @@ public class Robot extends OrientedThing {
 		triggerDrapeau();
 		triggerClef();
 		triggerLaser();
-		triggerTapisRoulant();
+		triggerTapisRoulant(false);
 	}
+	
 
-	private void triggerTapisRoulant() {
+	private void triggerTapisRoulant(boolean isExpress) {
 		TapisRoulant tapisRoulant= getItCell().getTapisRoulant();
 		if(tapisRoulant!=null) {
 			Orientation oriTapis= tapisRoulant.getOrientation();
 			if(getNextCell(oriTapis,1, 0).getRobot() ==null) {	
 				Cell in2cell = getNextCell(this.ori,2, 0);
-				if(in2cell.getRobot() == null || (in2cell.getTapisRoulant().getOrientation()!= oriTapis)) {
+				Cell in1cellbot = getNextCell(this.ori, 1, 1);
+				Cell in1celltop = getNextCell(this.ori, 1, -1);
+				if( (in2cell.getRobot() == null || in2cell.getTapisRoulant().getOrientation()!= oriTapis.next().next()) && 
+						(in1cellbot.getRobot() == null || in1cellbot.getTapisRoulant().getOrientation()!= oriTapis.next()) && 
+						(in1celltop.getRobot() == null || in1celltop.getTapisRoulant().getOrientation()!= oriTapis.previous()) ) {
 					moveDirection(tapisRoulant.ori);
 					if(tapisRoulant.isAngle()) {
 							this.ori= tapisRoulant.getOrientation();
 					}
 					
-					if  (tapisRoulant instanceof TapisRoulantExpress) {
-						triggerTapisRoulant();
+					if  (tapisRoulant instanceof TapisRoulantExpress && !isExpress) {
+						triggerTapisRoulant(true);
 					}
 				}
 			}

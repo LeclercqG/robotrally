@@ -580,7 +580,7 @@ public class RobotTests {
 		int x = 10;
 		int y = 10;
 		Robot r1 = new Robot(p, x+1, y, Orientation.WEST);
-		new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
+		new TapisRoulant(p, x, y, Orientation.NORTH, false);
 		new Robot(p, x, y-1, Orientation.WEST);
 		
 		r1.simulate("F");
@@ -588,6 +588,22 @@ public class RobotTests {
 		assertEquals(x, r1.getX());
 		assertEquals(y, r1.getY());
 	}
+	
+	/*@Test
+	void tapisRoulantDontMoveRobotIfThereIsARobotComingFromAnotherTapisRoulant() {
+		int x = 10;
+		int y = 10;
+		Robot r1 = new Robot(p, x+1, y, Orientation.WEST);
+		Robot r2 = new Robot(p, x+1, y-1, Orientation.WEST);
+		
+		new TapisRoulant(p, x, y, Orientation.EAST, false);
+		TapisRoulant t2= new TapisRoulant(p, x+1, y-1, Orientation.SOUTH, false);
+		
+		r1.simulate("F");
+		
+		assertEquals(x, r1.getX());
+		assertEquals(y, r1.getY());
+	}*/
 	
 	@Test
 	void tapisRoulantExpressAreTapisRoulant() {
@@ -599,18 +615,19 @@ public class RobotTests {
 		assertSame(express, p.getCell(x, y).getTapisRoulant());
 	}
 	
-	/*@Test
-	void tapisRoulantMoveRobotTwice() {
+	@Test
+	void tapisRoulantExpressMoveRobotTwice() {
 		int x = 10;
 		int y = 10;
 		Robot r1 = new Robot(p, 11, 10, Orientation.WEST);
 		new TapisRoulantExpress(p, x, y, Orientation.NORTH, false);
-		
+		new TapisRoulantExpress(p, x, y-1, Orientation.NORTH, false);
+		new TapisRoulantExpress(p, x, y-2, Orientation.NORTH, false);
 		r1.simulate("F");
 		
 		assertEquals(x, r1.getX());
 		assertEquals(y-2, r1.getY());
-	}*/
+	}
 	
 	@Test
 	void getLineGetALine() {	
