@@ -589,22 +589,6 @@ public class RobotTests {
 		assertEquals(y, r1.getY());
 	}
 	
-	/*@Test
-	void tapisRoulantDontMoveRobotIfThereIsARobotComingFromAnotherTapisRoulant() {
-		int x = 10;
-		int y = 10;
-		Robot r1 = new Robot(p, x+1, y, Orientation.WEST);
-		Robot r2 = new Robot(p, x+1, y-1, Orientation.WEST);
-		
-		new TapisRoulant(p, x, y, Orientation.EAST, false);
-		TapisRoulant t2= new TapisRoulant(p, x+1, y-1, Orientation.SOUTH, false);
-		
-		r1.simulate("F");
-		
-		assertEquals(x, r1.getX());
-		assertEquals(y, r1.getY());
-	}*/
-	
 	@Test
 	void tapisRoulantExpressAreTapisRoulant() {
 		int x = 10;
