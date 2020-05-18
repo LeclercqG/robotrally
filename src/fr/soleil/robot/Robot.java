@@ -181,8 +181,9 @@ public class Robot extends OrientedThing {
 						(in1cellbot.getRobot() == null || in1cellbot.getTapisRoulant().getOrientation()!= oriTapis.next()) && 
 						(in1celltop.getRobot() == null || in1celltop.getTapisRoulant().getOrientation()!= oriTapis.previous()) ) {
 					moveDirection(tapisRoulant.ori);
-					if(tapisRoulant.isAngle()) {
-							this.ori= tapisRoulant.getOrientation();
+					TapisRoulant newtapisRoulant= getItCell().getTapisRoulant();
+					if(newtapisRoulant!=null && newtapisRoulant.isAngle()) {
+							this.ori= newtapisRoulant.getOrientation();
 					}
 					
 					if  (tapisRoulant instanceof TapisRoulantExpress && !isExpress) {
