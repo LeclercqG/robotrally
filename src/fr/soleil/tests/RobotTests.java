@@ -50,7 +50,7 @@ public class RobotTests {
 	}
 	
 	@Test
-	void robotsAreCreatedWith5vieAnd3nbrRespawn() {
+	void robotsAreCreatedWith0PionsDegatsAnd3nbrRespawn() {
 		Robot robot = new Robot(p, 1, 1, Orientation.NORTH);
 		assertEquals(0, robot.getPionsDegats());
 		assertEquals(3, robot.getNbrRespawn());
